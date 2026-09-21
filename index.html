@@ -1,0 +1,2210 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S170商標行政系統常見錯誤修正指引與系統規則 (v1.16)</title>
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-light: #eff6ff;
+      --secondary: #0f172a;
+      --bg-gray: #f8fafc;
+      --border-color: #e2e8f0;
+      --accent: #d97706;
+      --text-main: #334155;
+      --sidebar-width: 280px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Microsoft JhengHei", sans-serif;
+      background-color: var(--bg-gray);
+      color: var(--text-main);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 左側懸浮階層折疊目錄 Floating Accordion Sidebar */
+    .sidebar-toc {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      bottom: 24px;
+      width: var(--sidebar-width);
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+
+    .toc-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--secondary);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toc-tree {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .toc-tree details {
+      margin-bottom: 8px;
+    }
+
+    .toc-tree summary {
+      font-weight: 600;
+      color: var(--secondary);
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+      outline: none;
+      user-select: none;
+    }
+
+    .toc-tree summary:hover {
+      background-color: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .toc-sub-list {
+      list-style: none;
+      padding-left: 14px;
+      margin: 4px 0 8px 0;
+      border-left: 2px solid #f1f5f9;
+    }
+
+    .toc-sub-list li {
+      margin-bottom: 4px;
+    }
+
+    .toc-sub-list a {
+      text-decoration: none;
+      color: #64748b;
+      font-size: 0.88rem;
+      display: block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-sub-list a:hover {
+      color: var(--primary);
+      background-color: var(--primary-light);
+      font-weight: 500;
+    }
+
+    .toc-single-link {
+      font-weight: 600;
+      color: var(--secondary);
+      text-decoration: none;
+      display: block;
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toc-single-link:hover {
+      background-color: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* 主內容區域 Main Content */
+    .main-wrapper {
+      margin-left: calc(var(--sidebar-width) + 48px);
+      max-width: 960px;
+      padding: 24px 24px 48px 0;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 32px 28px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
+    }
+
+    header h1 {
+      margin: 0 0 8px 0;
+      font-size: 1.8rem;
+    }
+
+    header p {
+      margin: 0;
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+
+    /* 頂部 Tab 頁籤導覽列 */
+    .tab-navigation {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 24px;
+      background: #ffffff;
+      padding: 8px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+
+    .tab-btn {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: #93c5fd;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 4px rgba(30, 64, 175, 0.25);
+    }
+
+    /* Tab 分頁內容面板 */
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--secondary);
+      margin: 16px 0 20px 0;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border-color);
+      scroll-margin-top: 24px;
+    }
+
+    .rule-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-left: 5px solid var(--primary);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      scroll-margin-top: 24px;
+    }
+
+    .rule-card h3 {
+      color: var(--secondary);
+      font-size: 1.25rem;
+      margin-top: 0;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .btn-badge {
+      display: inline-block;
+      background: #f1f5f9;
+      border: 1px solid #94a3b8;
+      color: #0f172a;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.86em;
+      font-weight: bold;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      margin: 0 2px;
+    }
+
+    .step-list {
+      padding-left: 20px;
+    }
+
+    .step-list li {
+      margin-bottom: 8px;
+    }
+
+    .alert-box {
+      background-color: #fffbeb;
+      border: 1px solid #fef3c7;
+      border-left: 4px solid var(--accent);
+      padding: 14px;
+      border-radius: 6px;
+      margin: 16px 0;
+      font-size: 0.92rem;
+    }
+
+    /* 快顯示窗 Footnote Popover 樣式 */
+    .footnote-ref {
+      position: relative;
+      display: inline-block;
+      color: #2563eb;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 0 2px;
+      padding: 0 4px;
+      background-color: #dbeafe;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+
+    .footnote-ref .popover {
+      visibility: hidden;
+      width: 280px;
+      background-color: #0f172a;
+      color: #ffffff;
+      text-align: left;
+      border-radius: 6px;
+      padding: 10px 12px;
+      position: absolute;
+      z-index: 200;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.2s, visibility 0.2s;
+      font-size: 0.82rem;
+      font-weight: normal;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+      line-height: 1.45;
+    }
+
+    .footnote-ref .popover::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #0f172a transparent transparent transparent;
+    }
+
+    .footnote-ref:hover .popover {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* 重製介面圖表 HTML/CSS Re-created UI Graphics */
+    .ui-mockup {
+      background-color: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 20px 0;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .ui-browser-bar {
+      background: #e2e8f0;
+      padding: 6px 12px;
+      border-radius: 4px 4px 0 0;
+      font-size: 0.85rem;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: -16px -16px 16px -16px;
+      border-bottom: 1px solid #cbd5e1;
+    }
+
+    .ui-breadcrumb {
+      color: #2563eb;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    .ui-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .ui-label {
+      font-size: 0.88rem;
+      color: #334155;
+    }
+
+    .ui-input {
+      background: #ffffff;
+      border: 1px solid #94a3b8;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      min-width: 140px;
+    }
+
+    .ui-btn {
+      background: #f1f5f9;
+      border: 1px solid #94a3b8;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .ui-panel {
+      border: 1px dashed #94a3b8;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      background: #ffffff;
+      font-size: 0.88rem;
+    }
+
+    .ui-panel-title {
+      color: #1e40af;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    /* 標註框 */
+    .fig003-boxes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .red-box {
+      border: 2px solid #ef4444;
+      padding: 10px;
+      border-radius: 4px;
+      background: #fef2f2;
+      text-align: center;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    .annotation-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-top: 3px solid #ef4444;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      color: #1e293b;
+      line-height: 1.4;
+      margin-top: 8px;
+    }
+
+    .highlight-red { border: 2px solid #ef4444 !important; background: #fef2f2 !important; }
+    .highlight-yellow { border: 2px solid #eab308 !important; background: #fefce8 !important; }
+    .highlight-green { border: 2px solid #22c55e !important; background: #f0fdf4 !important; }
+    .highlight-blue { border: 2px solid #3b82f6 !important; background: #eff6ff !important; }
+
+    table.ui-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.85rem;
+    }
+
+    table.ui-table th, table.ui-table td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 8px;
+      text-align: center;
+    }
+
+    table.ui-table th {
+      background-color: #0891b2;
+      color: #ffffff;
+    }
+
+    table.ui-table tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    /* 修改註冊簿內容-1 三框樣式 */
+    .cert-mockup {
+      background: #ffffff;
+      border: 1px solid #94a3b8;
+      padding: 20px;
+      font-family: "Microsoft JhengHei", sans-serif;
+      font-size: 0.88rem;
+    }
+
+    .cert-green-box {
+      border: 3px solid #16a34a;
+      background: #f0fdf4;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+    }
+
+    .cert-red-box {
+      border: 3px solid #dc2626;
+      background: #fef2f2;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+    }
+
+    .cert-blue-box {
+      border: 3px solid #2563eb;
+      background: #eff6ff;
+      padding: 12px;
+      border-radius: 6px;
+    }
+
+    /* 表格與常見樣式 */
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+
+    table.data-table th, table.data-table td {
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      text-align: left;
+    }
+
+    table.data-table th {
+      background-color: #f1f5f9;
+      color: var(--secondary);
+    }
+
+    /* 響應式調整 */
+    @media (max-width: 900px) {
+      .sidebar-toc {
+        position: static;
+        width: 100%;
+        margin-bottom: 24px;
+      }
+      .main-wrapper {
+        margin-left: 0;
+        padding: 16px;
+      }
+      .fig003-boxes {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 左側懸浮階層折疊目錄 Floating Accordion Sidebar -->
+<nav class="sidebar-toc">
+  <div class="toc-title">
+    <span>📂 導覽目錄</span>
+  </div>
+  <ul class="toc-tree">
+    <li>
+      <details>
+        <summary onclick="switchTab('tab-1')">壹、繳費與收據相關作業</summary>
+        <ul class="toc-sub-list">
+          <li><a onclick="switchTabAndScroll('tab-1', 'sec-1-1')">一、收據內容修正</a></li>
+          <li><a onclick="switchTabAndScroll('tab-1', 'sec-1-2')">二、案件收據登錄錯誤修正</a></li>
+          <li><a onclick="switchTabAndScroll('tab-1', 'sec-1-3')">三、收據登錄作業</a></li>
+          <li><a onclick="switchTabAndScroll('tab-1', 'sec-1-4')">四、重新產製註冊費繳費單</a></li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary onclick="switchTab('tab-2')">貳、文案相關作業</summary>
+        <ul class="toc-sub-list">
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-1')">一、假收文作業</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-2')">二、單一申請案含多圖樣</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-3')">三、爭議案銷號作業</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-4')">四、地址簿資料批次更新</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-5')">五、收文資料案號修正作業</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-6')">六、文/案與09*資料關聯錯誤</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-7')">七、變更案由/增減或變更案號</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-8')">八、承辦人變更/指派</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-9')">九、線上/紙本審查轉換</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-10')">十、無案號訴願行政訴訟</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-11')">十一、紙本/線上轉換流程錯誤</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-12')">十二、後續來文未辦結致主案未辦結</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-13')">十三、註冊前變更一文多案結果錯誤</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-14')">十四、發文通知無辦理結果不符</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-15')">十五、文案解開重辦/重審</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-16')">十六、審定後註冊前變更</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-17')">十七、審定後註冊前分割</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-18')">十八、修改註冊簿內容</a></li>
+          <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-19')">十九、多筆處分致S282顯示異常</a></li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary onclick="switchTab('tab-3')">參、人員相關異動</summary>
+        <ul class="toc-sub-list">
+          <li><a onclick="switchTabAndScroll('tab-3', 'sec-3-1')">一、人員新進、升遷、調科</a></li>
+          <li><a onclick="switchTabAndScroll('tab-3', 'sec-3-2')">二、人員退休、離職</a></li>
+          <li><a onclick="switchTabAndScroll('tab-3', 'sec-3-3')">三、任職滿1年指派評定委員</a></li>
+          <li><a onclick="switchTabAndScroll('tab-3', 'sec-3-4')">四、核准核駁代三層決行</a></li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary onclick="switchTab('tab-4')">肆、其他系統設定</summary>
+        <ul class="toc-sub-list">
+          <li><a onclick="switchTabAndScroll('tab-4', 'sec-4-1')">一、地址簿資料維護作業</a></li>
+          <li><a onclick="switchTabAndScroll('tab-4', 'sec-4-2')">二、非全體商標權人代理人</a></li>
+          <li><a onclick="switchTabAndScroll('tab-4', 'sec-4-3')">三、文稿樣式設定</a></li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary onclick="switchTab('tab-5')">伍、定期辦理業務</summary>
+        <ul class="toc-sub-list">
+          <li><a onclick="switchTabAndScroll('tab-5', 'sec-5-1')">一、新申請案領案進度表</a></li>
+          <li><a onclick="switchTabAndScroll('tab-5', 'sec-5-2')">二、每月統計前置</a></li>
+          <li><a onclick="switchTabAndScroll('tab-5', 'sec-5-3')">三、e-mail通知未繳註冊費</a></li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary onclick="switchTab('tab-6')">陸、系統相關規則說明</summary>
+        <ul class="toc-sub-list">
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-1')">一、S170產製之虛擬帳號</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-2')">二、收據字軌</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-3')">三、快軌案判定規則</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-4')">四、公文是否顯示於S282</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-5')">五、加速審查不受理規則</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-6')">六、註冊號及公報作業時程</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-7')">七、資料傳遞規則</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-8')">八、41檔撤銷條款代號</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-9')">九、新舊版瀏覽文件時機</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-10')">十、核准審定書退文處理</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-11')">十一、商標種類編號規則</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-12')">十二、檔卷編號規則</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-13')">十三、商品分割規則</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-14')">十四、到期消滅與放棄延展</a></li>
+          <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-15')">十五、訴願會與法院答辯</a></li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <a onclick="switchTab('tab-7')" class="toc-single-link">柒、專有名詞列表</a>
+    </li>
+    <li>
+      <a onclick="switchTab('tab-8')" class="toc-single-link">捌、文件資訊與編修紀錄</a>
+    </li>
+  </ul>
+</nav>
+
+<!-- 主內容區域 Main Content -->
+<div class="main-wrapper">
+  <header>
+    <h1>經濟部智慧財產局｜S170商標行政系統</h1>
+    <p>常見錯誤修正指引與問題系統規則說明 (v1.16)</p>
+  </header>
+
+  <!-- 頂部 Tab 頁籤列 Navigation -->
+  <div class="tab-navigation">
+    <button class="tab-btn active" id="btn-tab-1" onclick="switchTab('tab-1')">壹、繳費與收據作業</button>
+    <button class="tab-btn" id="btn-tab-2" onclick="switchTab('tab-2')">貳、文案相關作業</button>
+    <button class="tab-btn" id="btn-tab-3" onclick="switchTab('tab-3')">參、人員相關異動</button>
+    <button class="tab-btn" id="btn-tab-4" onclick="switchTab('tab-4')">肆、其他系統設定</button>
+    <button class="tab-btn" id="btn-tab-5" onclick="switchTab('tab-5')">伍、定期辦理業務</button>
+    <button class="tab-btn" id="btn-tab-6" onclick="switchTab('tab-6')">陸、系統規則說明</button>
+    <button class="tab-btn" id="btn-tab-7" onclick="switchTab('tab-7')">柒、專有名詞列表</button>
+    <button class="tab-btn" id="btn-tab-8" onclick="switchTab('tab-8')">捌、文件資訊紀錄</button>
+  </div>
+
+  <!-- 分頁一：壹、繳費與收據相關作業 -->
+  <div class="tab-panel active" id="tab-1">
+    <h2 class="section-title">壹、繳費與收據相關作業</h2>
+
+    <div class="rule-card" id="sec-1-1">
+      <span class="tag">規則類別 01</span>
+      <h3>一、收據內容修正</h3>
+      <p><strong>【情境與說明】</strong>修改收據商標名稱（例如：商標名稱包含簡體字需調整）、新增／修改收據之繳款人。</p>
+      <p><strong>【操作步驟】</strong></p>
+      <ol class="step-list">
+        <li>於 <strong>E網通</strong> 點選 <span class="btn-badge">系統專區</span> → <span class="btn-badge">規費管理系統</span>。</li>
+        <li>點選 <span class="btn-badge">收據</span> → <span class="btn-badge">繳費資料修正（開收據前）</span> 後，輸入申請異動之收文文號後點選 <span class="btn-badge">查詢</span>。</li>
+        <li>輸入正確資料後點選 <span class="btn-badge">存檔</span>。</li>
+      </ol>
+
+      <!-- HTML/CSS 手繪還原圖示 收據內容修正.png -->
+      <div class="ui-mockup">
+        <div class="ui-browser-bar">🌐 系統介面模擬圖 (原圖 收據內容修正.png)</div>
+        <div class="ui-breadcrumb">收據 ＞＞ 繳費資料修正 (開收據前)</div>
+        
+        <div class="ui-row">
+          <span class="ui-label" style="color:#dc2626; font-weight:bold;">* 申請異動之收文文號：</span>
+          <input type="text" class="ui-input" value="113XXXXXX" readonly>
+          <button class="ui-btn">查詢</button>
+          <button class="ui-btn">清除</button>
+        </div>
+
+        <div class="ui-panel">
+          <div class="ui-panel-title">修改前案件資料 ＞＞</div>
+          <span style="color:#059669; font-weight:bold;">第1列為本收據目前之資料</span>
+        </div>
+
+        <div class="ui-panel">
+          <div class="ui-panel-title">行政系統資料 ＞＞</div>
+          <span style="color:#059669; font-weight:bold;">第2列為S170中之資料</span>
+        </div>
+
+        <div class="ui-panel" style="border-color:#2563eb;">
+          <div class="ui-panel-title" style="color:#2563eb;">可修改資料欄位 ＞＞</div>
+          <span style="color:#dc2626; font-size:0.8rem;">第3列用以填入欲修正之資料</span>
+          
+          <div class="fig003-boxes">
+            <div>
+              <div class="red-box">A. 第1欄 ：輸入申請案號</div>
+            </div>
+            <div>
+              <div class="red-box">B. 第2欄<span class="footnote-ref">[1]<span class="popover"><strong>註腳 1</strong>：本欄位僅依申請案號帶入S170內之商標名稱，無法直接輸入商標名稱，故收據商標名稱錯誤時， 需先修改S170資料 ，再由此作業將S170中已修正之資料帶入</span></span> ：依第1欄之申請案號，帶入S170中的商標名稱</div>
+            </div>
+            <div>
+              <div class="red-box">C. 第3欄 ：用於輸入收據繳款人</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card" id="sec-1-2">
+      <span class="tag">規則類別 02</span>
+      <h3>二、案件收據登錄錯誤修正</h3>
+      <p><strong>【情境與說明】</strong>常發生於同一案下存在多筆繳費紀錄時 (例如：修正商品後補繳規費等)。</p>
+      <div class="alert-box">
+        ⚠️ <strong>關鍵避錯提示：</strong><br>
+        僅審查畫面中 <span class="btn-badge">審查作業-新申請案</span> → <span class="btn-badge">繳費紀錄</span> → <span class="btn-badge">收據登錄</span> 功能有問題。<br>
+        若由 <span class="btn-badge">審查管理</span> → <span class="btn-badge">收據登錄作業</span> 功能中操作，則<strong>不會出現錯誤</strong>。
+      </div>
+      <p><strong>【作業方式】</strong></p>
+      <ol class="step-list">
+        <li>點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">收文查詢</span> → <span class="btn-badge">收文資料查詢作業</span>，輸入該案件之案號<span class="footnote-ref">[2]<span class="popover"><strong>註腳 2</strong>：不宜輸入收據之收文文號，因後續操作中尚須使用主案之文號、收據之收文文號等各項資訊，以案號查詢可一次查出所有來文</span></span>。</li>
+        <li>點選 <span class="btn-badge">審查管理</span> → <span class="btn-badge">收據登錄作業</span>，輸入收據收文文號。</li>
+        <li>將收據內所有費用搬移紀錄點選 <span class="btn-badge">刪除</span>，使收據回復到尚未使用狀態。</li>
+        <li>重新登錄收據內費用搬移資料。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-1-3">
+      <span class="tag">規則類別 03</span>
+      <h3>三、收據登錄作業</h3>
+      <p><strong>【情境與說明】</strong>以後續來文方式繳納規費，規費歸屬於該後續來文，而非主案。承辦人需將後續來文中的規費，自行搬移至主案中。</p>
+      <p><strong>【作業方式】</strong>點選 <span class="btn-badge">審查管理</span> → <span class="btn-badge">收據登錄作業</span>，輸入收據所在之收文文號，即可填入收據金額移轉之目標。</p>
+      <ul>
+        <li>🟡 黃色框處：移入規費的目標文號</li>
+        <li>🟢 綠色框處：收據號碼<span class="footnote-ref">[3]<span class="popover"><strong>註腳 3</strong>：雖多數情況中，單一來文中僅會有一張收據，但仍可能包含多張收據，故需輸入收據號碼，以區別規費係由哪一張收據移出</span></span></li>
+        <li>🔵 藍色框處：移入金額</li>
+      </ul>
+
+      <!-- HTML/CSS 手繪還原圖示 收據登錄作業.png -->
+      <div class="ui-mockup">
+        <div class="ui-browser-bar">🌐 系統介面模擬圖 (原圖 收據登錄作業.png)</div>
+        
+        <div style="background:#0284c7; color:white; padding:6px 12px; font-weight:bold; border-radius:4px; margin-bottom:12px;">
+          審查作業 - 收據登錄
+        </div>
+
+        <div class="ui-row highlight-red" style="padding:8px; border-radius:6px;">
+          <span style="color:#dc2626; font-weight:bold;">* 收文文號：</span>
+          <input type="text" class="ui-input" value="11470087460" readonly style="font-weight:bold;">
+          <button class="ui-btn">清除</button>
+          <span style="color:#dc2626; font-size:0.85rem; font-weight:bold; margin-left:12px;">← 紅框標示處：輸入收據所在收文文號</span>
+        </div>
+
+        <div style="background:#e2e8f0; padding:8px; border-radius:4px; margin-top:12px;">
+          <button class="ui-btn" style="margin-bottom:8px;">清除編輯區</button>
+          
+          <div class="ui-row" style="gap:16px;">
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <input type="text" class="ui-input highlight-yellow" placeholder="目標文號" value="11470205340" readonly>
+              <span style="color:#d97706; font-size:0.75rem; font-weight:bold;">🟡 黃框：移入規費目標文號</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <input type="text" class="ui-input highlight-green" placeholder="收據號碼" value="114ET007797" readonly>
+              <span style="color:#16a34a; font-size:0.75rem; font-weight:bold;">🟢 綠框：收據號碼</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <input type="text" class="ui-input highlight-blue" placeholder="移入金額" value="2400" readonly>
+              <span style="color:#2563eb; font-size:0.75rem; font-weight:bold;">🔵 藍框：移入金額</span>
+            </div>
+
+            <button class="ui-btn" style="background:#2563eb; color:white; font-weight:bold; border:none; align-self:flex-start; margin-top:2px;">存檔</button>
+          </div>
+        </div>
+
+        <table class="ui-table">
+          <thead>
+            <tr>
+              <th>序號</th>
+              <th>收據文號</th>
+              <th>收據號碼</th>
+              <th>收據金額</th>
+              <th>退費金額</th>
+              <th>作廢註記</th>
+              <th>使用金額</th>
+              <th>功能</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td></td>
+              <td>114ET007797</td>
+              <td>2400</td>
+              <td>0</td>
+              <td>未作廢</td>
+              <td>0</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>11470205340</td>
+              <td>114ET007797</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>2400</td>
+              <td><button class="ui-btn" style="color:#dc2626; border-color:#fca5a5; padding:2px 6px;">刪除</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="rule-card" id="sec-1-4">
+      <span class="tag">規則類別 04</span>
+      <h3>四、重新產製註冊費繳費單</h3>
+      <p><strong>【情境與說明】</strong>用於延長繳納註冊費期限（一般於公示送達、或送達時已逾／接近繳費期限使用）。</p>
+      <p><strong>【作業方式】</strong></p>
+      <ol class="step-list">
+        <li>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">文案資料維護作業</span> → <span class="btn-badge">新申請註冊案基本資料維護作業</span>。</li>
+        <li>點選 <span class="btn-badge">註冊費繳費紀錄</span> 頁籤，並更新第一期或全期繳費期限、全期逾期加倍繳費起始日期及全期逾期加倍繳費終止日期欄位。</li>
+        <li>點選 <span class="btn-badge">存檔</span> 後，繳費單資訊隨即更新，並發送系統訊息刪除原繳費單。</li>
+        <li>再點選 <span class="btn-badge">列印繳費單</span>，則會列印出最新繳費單。</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 分頁二：貳、文案相關作業 -->
+  <div class="tab-panel" id="tab-2">
+    <h2 class="section-title">貳、文案相關作業</h2>
+
+    <div class="rule-card" id="sec-2-1">
+      <span class="tag">文案作業 01</span>
+      <h3>一、假收文作業</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <p>無實際來文時使用，常見類型如下：</p>
+      <ol class="step-list">
+        <li>1. 本局自行提起之廢止、評定<span class="footnote-ref">[4]<span class="popover"><strong>註腳 4</strong>：此類型通常承辦人不會主動製作申請書，僅有一個簽准的便簽，假收文條碼直接貼於便簽、新爭議號亦直接寫在便簽上即可。未來可製作固定格式當作申請書使用</span></span></li>
+        <li>2. 原處分撤銷<span class="footnote-ref">[5]<span class="popover"><strong>註腳 5</strong>：核駁新案因已產生核駁號，現行制度下會造成S28*異常，未來可考慮自S28*修正，則可直接將原案解開重審</span></span></li>
+        <li>3. 更正</li>
+      </ol>
+      
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li><strong>作業前檢查：</strong>
+          <ul>
+            <li>是否有申請書，若無申請書則先印製申請書。</li>
+            <li>點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">收文查詢</span> → <span class="btn-badge">收文資料查詢作業</span>，檢查有無相同案件。</li>
+            <li>若為註冊案，則再點選 <span class="btn-badge">資料查詢</span> → <span class="btn-badge">商標權資料查詢作業</span>，檢視41檔（權檔）是否已有相同案由在案。</li>
+          </ul>
+        </li>
+        <li><strong>收文作業：</strong>
+          <ul>
+            <li>點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">公文維護</span> → <span class="btn-badge">創稿收文鍵入作業</span> → <span class="btn-badge">新增(存檔時取號)<span class="footnote-ref">[6]<span class="popover"><strong>註腳 6</strong>：存檔後即取號，務必確定要收文才點選存檔，否則後續銷號作業相對麻煩</span></span></span>。</li>
+            <li>將對應條碼貼於申請書上（收文號原則黏貼位置頂端、左右置中；核駁新案撤銷重審之申請案號<span class="footnote-ref">[7]<span class="popover"><strong>註腳 7</strong>：將原核駁新案申請案號第4碼改為9，作為新申請案號</span></span>需另外製作條碼，電子申請者貼左上，紙本申請者貼右上）。</li>
+            <li>輸入該公文相關資訊：
+              <ul>
+                <li>核駁新案撤銷重審：收文日期、案由、郵寄日期（非必填）、電子收件<span class="footnote-ref">[8]<span class="popover"><strong>註腳 8</strong>：雖為非必填， 但核駁新案撤銷重審原則上均採電子收件 ，否則紙本收件需印製6張圖</span></span>（非必填）、商標種類、申請案號、核駁號、商標名稱。</li>
+                <li>爭議案撤銷重審：原始爭議號收文日期、案由、郵寄日期（非必填）、原始爭議號。</li>
+                <li>其他假收文：收文日期、案由、郵寄日期（非必填）。</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><strong>分文作業：</strong>
+          <ul>
+            <li>點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">分文相關作業</span> → <span class="btn-badge">分文作業</span>，找到剛收的案件。</li>
+            <li>點選 <span class="btn-badge">…</span> 按鈕。</li>
+            <li>輸入前置文號、承辦人<span class="footnote-ref">[9]<span class="popover"><strong>註腳 9</strong>：核駁新案撤銷重審時， 分文時務必先分給「科」 ，案件才會產生線上審查流程（各科代號：行政科W410、審查1科W420以此類推），若直接分給承辦人，因無線上流程，前置作業中搜尋不到此案。只要回到前一步驟重新分文即可排除（包含已經進行到後續建檔、確核等步驟，均可通過重新分文，回到前面的步驟重做）</span></span>後，點選 <span class="btn-badge">確定帶回</span>。</li>
+            <li>點選 <span class="btn-badge">重新判讀</span> 完成分文作業。</li>
+          </ul>
+        </li>
+
+        <!-- HTML/CSS 手繪還原圖示 假收文作業.png -->
+        <div class="ui-mockup">
+          <div class="ui-browser-bar">🌐 系統介面模擬圖 (原圖 假收文作業.png)</div>
+          
+          <div style="display:inline-block; background:#0284c7; color:white; padding:4px 10px; font-weight:bold; border-radius:4px; margin-bottom:12px;">
+            自請撤回-未處理
+          </div>
+
+          <table class="ui-table" style="text-align:left;">
+            <thead>
+              <tr style="background:#bae6fd; color:#0369a1;">
+                <th style="width:180px;">收文文號</th>
+                <th style="width:120px;">案由</th>
+                <th>商標種類</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="vertical-align:top; padding:8px;">
+                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px;">
+                    <a style="color:#2563eb; font-weight:bold; text-decoration:underline;">11580470350</a>
+                    <button class="ui-btn highlight-red" style="padding:0 6px; font-weight:bold; color:#dc2626;">...</button>
+                    <span style="color:#dc2626; font-size:0.75rem; font-weight:bold;">← 點選…按鈕</span>
+                  </div>
+                  <!-- 按鈕垂直方向排列 Vertical Stack -->
+                  <div style="display:flex; flex-direction:column; gap:4px; width:100px;">
+                    <button class="ui-btn" style="background:#e2e8f0; font-size:0.8rem; text-align:center;">電子資料</button>
+                    <button class="ui-btn" style="background:#e2e8f0; font-size:0.8rem; text-align:center;">提醒設定</button>
+                    <button class="ui-btn" style="background:#e2e8f0; font-size:0.8rem; text-align:center; color:#2563eb; font-weight:bold;">分承辦人</button>
+                    <button class="ui-btn" style="background:#e2e8f0; font-size:0.8rem; text-align:center; color:#2563eb; font-weight:bold;">重新判讀</button>
+                    <button class="ui-btn" style="background:#e2e8f0; font-size:0.8rem; text-align:center; color:#059669; font-weight:bold;">強制通過</button>
+                  </div>
+                </td>
+                <td style="vertical-align:top; padding:8px; font-weight:bold;">
+                  R1 自請撤回
+                </td>
+                <td style="vertical-align:top; padding:8px;">
+                  商標
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <li><strong>外包2000鍵入作業：</strong><span class="footnote-ref">[10]<span class="popover"><strong>註腳 10</strong>：此步驟完成後，需 馬上接「前置作業」流程 ，以免案件被其他前置人員領走</span></span>
+          <ul>
+            <li>核駁新案撤銷重審：點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">分文相關作業</span> → <span class="btn-badge">新申請案審查基本資料鍵入</span>，依原案資料鍵入；再點選 <span class="btn-badge">電子與紙本資料確核作業<span class="footnote-ref">[11]<span class="popover"><strong>註腳 11</strong>：現已無作用但流程尚未移除，主畫面中顯示「驗證錯誤」無須理會，鍵入收文號點選一致即可。若不確定是否已經點選一致，可再次鍵入收文號，若顯示「已一致」表示已完成此步驟。另外114年初曾發生案件無法完成本項檢核，但後續步驟仍可繼續進行，未來可驗證是能移除本功能。</span></span></span>。</li>
+            <li>其他案：點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">分文相關作業</span> → <span class="btn-badge">一般案審查資料首次鍵入作業<span class="footnote-ref">[12]<span class="popover"><strong>註腳 12</strong>：人名ID欄位需特別注意，要視案由與目的建立1.本局自行提起之評定、廢止，以「本局商標審查人員」（ID：P000000006）為申請人；2.法院或訴願會未發文，直接請本局提供資料時，身分別應為「來文機關」；3.有時須建多組申請人(例如：共有、以及欲同時發文予兩造時)</span></span></span>。</li>
+          </ul>
+        </li>
+        <li><strong>前置作業 ─ 以下步驟僅 **核駁新案撤銷重審**<span class="footnote-ref">[13]<span class="popover"><strong>註腳 13</strong>：若不慎於前置作業完成前，誤點確認並離開將案件送至待領區 ，可點選線上審查管理→管理及維護→指派承辦人作業先派案給自己，以免其他人領走，再由文檔點「線上轉紙本」，則可由分文作業再重新執行</span></span> 需執行：</strong>
+          <ul>
+            <li>點選 <span class="btn-badge">線上審查管理</span> → <span class="btn-badge">外包及前置</span> → <span class="btn-badge">前置待處理作業</span>。</li>
+            <li>輸入文號找出案件，點選收文文號進入案件。</li>
+            <li>點選審查作業維護，將原案資料補回（基本資料、優先權、文字分析、圖形分析、繳費紀錄：點選不繳費、審查結果：補回審查紀錄/第一次通知時間、商品：可點選複製其他案商品匯入）。</li>
+            <li><strong>掃圖<span class="footnote-ref">[14]<span class="popover"><strong>註腳 14</strong>：早期系統建置，只能通過此作業建立案件的圖樣資料夾，一旦掃圖完成後，可再點選檔案維護→商品資料維護→商標圖樣聲音更新作業置換為較清晰的圖樣</span></span>：</strong>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">商品資料維護</span> → <span class="btn-badge">商標圖樣聲音更新作業</span>，輸入原核駁案申請號。點選 <span class="btn-badge">圖形2</span> 下載，將圖檔列印、剪下、於背面寫上新申請案號，交外包2000掃描圖檔。</li>
+            <li><strong>上傳文件<span class="footnote-ref">[15]<span class="popover"><strong>註腳 15</strong>：必須 有一文件之資料 分類為申請書B0401 ，否則會造成資轉問題</span></span>：</strong>於 <strong>E網通</strong> 點選 <span class="btn-badge">系統專區</span> → <span class="btn-badge">申請案件調閱系統</span> 輸入原核駁申請案號，將所有收發文全數下載至本機（命名方式建議：日期7碼+案由+附件描述）。製作重審函（例如：承辦人僅簽准但未發文通知申請人）。
+              
+      <!-- 重審函內容範例 (置於發文通知正下方) -->
+      <div style="margin-top: 12px; background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #2563eb; padding:12px; border-radius:6px; margin-bottom:16px;">
+        <div style="font-weight:bold; color:#1e40af; margin-bottom:8px; font-size:0.95rem;">重審函內容範例</div>
+        
+        <div style="margin-bottom:12px;">
+          <div style="font-weight:bold; color:#334155; margin-bottom:6px; font-size:0.88rem;">A. 已有依據，不需於公文中說明撤銷，以未結案書函稿辦理 <span style="font-weight:normal; color:#64748b;">(例如：承辦人已發文通知、法院及訴願會決定撤銷)</span></div>
+          
+          <!-- 主旨 區塊 -->
+          <div style="position:relative; background:#1e293b; color:#f8fafc; padding:10px 12px; border-radius:4px; font-family:monospace; font-size:0.85rem; margin-bottom:6px;">
+            <button onclick="navigator.clipboard.writeText('本局○年○月○日（○）智商○字第○號「○○」商標案核駁審定書之核駁處分（核駁號○，第○、○類，原申請案號○），應予撤銷，請查照。'); alert('已複製 A 案主旨！');" style="position:absolute; right:8px; top:8px; background:#3b82f6; color:white; border:none; padding:2px 8px; border-radius:3px; font-size:0.75rem; cursor:pointer;">複製主旨</button>
+            <div><strong>主旨：</strong>本局○年○月○日（○）智商○字第○號「○○」商標案核駁審定書之核駁處分（核駁號○，第○、○類，原申請案號○），應予撤銷，請查照。</div>
+          </div>
+          
+          <!-- 說明 區塊 -->
+          <div style="position:relative; background:#1e293b; color:#f8fafc; padding:10px 12px; border-radius:4px; font-family:monospace; font-size:0.85rem;">
+            <button onclick="navigator.clipboard.writeText('一、依智慧財產及商業法院於○年○月○日以○年度行商訴字第○號判決辦理。／依經濟部○年○月○日經法字第○號訴願決定書辦理。／依本局○年○月○日（○）智商字○號函辦理。\n二、本局因業務需要，新編收文文號及申請案號發回原審查人員○（電話：02-2376○）重新審辦，新編收文文號為○，申請案號為○，申請日○年○月○日。\n三、嗣後若有來文、查詢或後續審辦程序，務請註明本件新編之申請案號。'); alert('已複製 A 案說明！');" style="position:absolute; right:8px; top:8px; background:#3b82f6; color:white; border:none; padding:2px 8px; border-radius:3px; font-size:0.75rem; cursor:pointer;">複製說明</button>
+            <div><strong>說明：</strong><br>一、依智慧財產及商業法院於○年○月○日以○年度行商訴字第○號判決辦理。／依經濟部○年○月○日經法字第○號訴願決定書辦理。／依本局○年○月○日（○）智商字○號函辦理。<br>二、本局因業務需要，新編收文文號及申請案號發回原審查人員○（電話：02-2376○）重新審辦，新編收文文號為○，申請案號為○，申請日○年○月○日。<br>三、嗣後若有來文、查詢或後續審辦程序，務請註明本件新編之申請案號。</div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-weight:bold; color:#334155; margin-bottom:6px; font-size:0.88rem;">B. 尚無依據，需在公文中直接說明撤銷，以未結案函稿辦理 <span style="font-weight:normal; color:#64748b;">(例如：承辦人僅簽准但未發文通知申請人)</span></div>
+          
+          <!-- 主旨 區塊 -->
+          <div style="position:relative; background:#1e293b; color:#f8fafc; padding:10px 12px; border-radius:4px; font-family:monospace; font-size:0.85rem; margin-bottom:6px;">
+            <button onclick="navigator.clipboard.writeText('本局○年○月○日（○）智商○字第○號「○○」商標案核駁審定書之核駁處分（核駁號○，第○、○類，原申請案號○），應予撤銷，請查照。'); alert('已複製 B 案主旨！');" style="position:absolute; right:8px; top:8px; background:#3b82f6; color:white; border:none; padding:2px 8px; border-radius:3px; font-size:0.75rem; cursor:pointer;">複製主旨</button>
+            <div><strong>主旨：</strong>本局○年○月○日（○）智商○字第○號「○○」商標案核駁審定書之核駁處分（核駁號○，第○、○類，原申請案號○），應予撤銷，請查照。</div>
+          </div>
+          
+          <!-- 說明 區塊 -->
+          <div style="position:relative; background:#1e293b; color:#f8fafc; padding:10px 12px; border-radius:4px; font-family:monospace; font-size:0.85rem;">
+            <button onclick="navigator.clipboard.writeText('一、本局因業務需要，新編收文文號及申請案號發回原審查人員○（電話：02-2376○）重新審辦，新編收文文號為○，申請案號為○，申請日○年○月○日。\n二、嗣後若有來文、查詢或後續審辦程序，務請註明本件新編之申請案號。'); alert('已複製 B 案說明！');" style="position:absolute; right:8px; top:8px; background:#3b82f6; color:white; border:none; padding:2px 8px; border-radius:3px; font-size:0.75rem; cursor:pointer;">複製說明</button>
+            <div><strong>說明：</strong><br>一、本局因業務需要，新編收文文號及申請案號發回原審查人員○（電話：02-2376○）重新審辦，新編收文文號為○，申請案號為○，申請日○年○月○日。<br>二、嗣後若有來文、查詢或後續審辦程序，務請註明本件新編之申請案號。</div>
+          </div>
+        </div>
+      </div>
+
+            </li>
+            <li>前置作業完成，但切勿先點確認並離開，應先進行實體文件步驟。</li>
+          
+            <li><strong>發文通知：</strong><span class="footnote-ref">[16]<span class="popover"><strong>註腳 16</strong>：必須 待所有文件 上傳完畢才可發文 ，因現行系統規則於首次發文後，便無法再上傳收文電子文件</span></span>必須待所有文件上傳完畢才可發文，因現行系統規則於首次發文後，便無法再上傳收文電子文件。</li></ul>
+        </li>
+        <li><strong>實體文件送檔案室：</strong>將文件分3類，做移交動作並列印移交清單：
+          <ul>
+            <li><strong>新卷：</strong>將申請書、簽、檢討表釘在一起，移交外包2000製作新卷後送回本人手上。點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">分文相關作業</span> → <span class="btn-badge">申請案卷送檔案室移交作業</span>；點選製卷歸檔，輸入收文文號、檔卷編號<span class="footnote-ref">[17]<span class="popover"><strong>註腳 17</strong>：檔卷編號格式為 K+空格+新申請案號</span></span>後送出。</li>
+            <li><strong>舊卷：</strong>直接移交列印。</li>
+            <li><strong>參考卷：</strong>直接移交列印。</li>
+            <li><strong>交秘書室外包送檔案室8400：</strong>新卷、舊卷歸為一組，指定送檔案室徐文彬；參考卷歸為另一組送檔案室。</li>
+          </ul>
+        </li>
+        <li><strong>線上案件移交承辦人<span class="footnote-ref">[18]<span class="popover"><strong>註腳 18</strong>：本作業務必按照此步驟執行，避免送至待領區後，由其他審查人員領走</span></span>：</strong>
+          <ul>
+            <li>點選 <span class="btn-badge">線上審查管理</span> → <span class="btn-badge">管理及維護</span> → <span class="btn-badge">以分頁開啟指派承辦人作業</span>，將所有指派承辦人程序準備到最後一步（即新承辦人全部都選定，僅差點選確定改派）。</li>
+            <li>點選 <span class="btn-badge">線上審查管理</span> → <span class="btn-badge">外包及前置</span> → <span class="btn-badge">前置待處理作業</span>，於待辦案件中找到欲送出之案件。</li>
+            <li>點選 <span class="btn-badge">確認並離開</span> 送至待領區。</li>
+            <li>立刻回到指派承辦人作業分頁，將案件改派並通知承辦人。</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-2-2">
+      <span class="tag">文案作業 02</span>
+      <h3>二、單一註冊申請案包含多個商標圖樣</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>商標申請註冊以一案一圖樣為原則<span class="footnote-ref">[19]<span class="popover"><strong>註腳 19</strong>：依《商標法》第19條第5項：「申請商標註冊，應以一申請案一商標之方式為之，並得指定使用於二個以上類別之商品或服務。」</span></span>。</li>
+        <li>部分申請人未留意此規定，以單一申請案檢送多個圖樣來申請註冊。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li><strong>申請人僅保留其中一圖：</strong>發文通知申請人檢送新圖樣即可。</li>
+        <li><strong>申請人欲保留多圖：</strong>
+          <ul>
+            <li><strong>紙本送件：</strong>
+              <ul>
+                <li><strong>申請人：</strong>將欲保留之圖樣拆分為多個圖，其中1圖保留為原案新圖樣，其餘圖貼於新申請書上。新圖及申請書作為來文附件，以原案名義，檢送 <span class="btn-badge">V 補正</span> 文。</li>
+                <li><strong>原案承辦人：</strong>將申請人檢送之申請書調回，送至3樓櫃台收文，並註明申請日為原案申請日。記住新申請案之案號，並於收文完成進入「審查○科待辦中」狀態時，通知維護人員。</li>
+                <li><strong>維護人員：</strong>將其中1圖用以替換原案圖樣。待原案承辦人通知後，將新申請案派給原案承辦人。</li>
+              </ul>
+            </li>
+            <li><strong>電子送件：</strong>
+              <ul>
+                <li><strong>申請人：</strong>將欲保留之圖樣拆分為多個圖，其中1圖保留為原案新圖樣，其餘圖貼於新申請書上。以 <span class="btn-badge">A 新申請</span> 檢送其餘圖樣申請案，並記住新送件之申請案號。以 <span class="btn-badge">V 補正</span> 檢送原案新圖樣，並將新送件之申請案號一併註記於文中。</li>
+                <li><strong>原案承辦人：</strong>收文完成進入「審查○科待辦中」狀態時，通知維護人員。</li>
+                <li><strong>維護人員：</strong>將其中1圖用以替換原案圖樣。將新申請案之申請日，改為原案申請日。待原案承辦人通知後，將新申請案派給原案承辦人。</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-2-3">
+      <span class="tag">文案作業 03</span>
+      <h3>三、爭議案銷號作業</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>偶有案件出現此情況，銷號雖不再辦理，但仍要計算承辦人員績效。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li><strong>辦結21檔：</strong>
+          <ul>
+            <li>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">文案資料維護作業</span> → <span class="btn-badge">一般行政公文基本資料維護作業</span>，輸入欲銷號之收文文號。</li>
+            <li>清除21檔中資料：
+              <ul>
+                <li>一般行政公文基本資料維護頁籤：辦理結果調整為「--請選擇--」、銷號原因調整為「--請選擇--」、辦理日期欄位清空。</li>
+                <li>案件清單頁籤：點選 <span class="btn-badge">修改</span>，將辦理結果調整為「--請選擇--」。</li>
+                <li>回到一般行政公文基本資料維護頁籤，點選 <span class="btn-badge">存檔</span>。</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><strong>辦結爭議檔：</strong>
+          <ul>
+            <li>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">文案資料維護作業</span> → <span class="btn-badge">爭議案基本資料維護作業</span>，輸入欲銷號之爭議號。</li>
+            <li>補足爭議檔中所有資料，其中系爭商品類別頁籤係用於計算承辦人員績效，一定要確認是否有資料。</li>
+            <li>回到爭議案基本資料維護頁籤，點選 <span class="btn-badge">存檔</span>。</li>
+          </ul>
+        </li>
+        <li><strong>調整41檔：</strong>
+          <ul>
+            <li>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">文案資料維護作業</span> → <span class="btn-badge">商標權資料維護作業</span>，輸入欲修正之註冊號。</li>
+            <li>點選 <span class="btn-badge">商標權資料</span> 頁籤，將爭議在案次數減1，並點選 <span class="btn-badge">存檔</span>。</li>
+            <li>回到商標權基本資料維護頁籤，點選 <span class="btn-badge">存檔</span>。</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-2-4">
+      <span class="tag">文案作業 04</span>
+      <h3>四、地址簿資料批次更新</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>因人名ID資料錯誤或調整，需將該人名ID所屬的各項檔案一併修正，否則僅未來來文以新人名ID建置。</li>
+        <li>需調整檔案包含文檔、案檔、權檔、授權檔、再授權檔、質權檔。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>點擊 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">基本資料維護作業</span> → <span class="btn-badge">人名基本資料批次更新</span>。</li>
+        <li>輸入ID或中文名稱，點擊 <span class="btn-badge">查詢</span>。</li>
+        <li>勾選欲調整之人名ID資料，點擊 <span class="btn-badge">下一步</span>。</li>
+        <li>勾選欲調整之檔案，點擊 <span class="btn-badge">下一步</span>。</li>
+        <li>輸入正確資料，點擊 <span class="btn-badge">批次更新</span>。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-2-5">
+      <span class="tag">文案作業 05</span>
+      <h3>五、收文資料案號修正作業</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>申請人填寫錯誤，或收文櫃台鍵入錯誤。</li>
+        <li><strong>系統規則說明：</strong>
+          <ul>
+            <li>收文依照申請書所載案號A，於S170成立一待辦公文，並於S09*產出A案下收文資料。</li>
+            <li>S170中待辦公文下，點選瀏覽文件，係依該待辦公文所指定案號A為索引，於S09*找到A案收文資料後即時顯示。</li>
+            <li>於S170將該公文所指定案號修改為B後點選瀏覽文件，雖會改以修改B案為索引搜尋S09*資料，但原收文已將實體檔存放於S09*中的A案中， B案下並無資料，仍無法正確顯示。</li>
+            <li>故S170與S09*均需調整。</li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- HTML/CSS 手繪還原圖示 收文資料案號修正作業-1~3.png -->
+      <div class="ui-mockup" style="margin:20px 0;">
+        <div class="ui-browser-bar">🌐 系統介面模擬圖 (原圖 收文資料案號修正作業-1.png / 2.png / 3.png 流程)</div>
+        
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:16px; margin-top:12px;">
+          <!-- 步驟一 -->
+          <div style="border:1px solid #94a3b8; border-radius:8px; padding:12px; background:#ffffff; box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+            <div style="font-weight:bold; color:#1e40af; border-bottom:2px solid #3b82f6; padding-bottom:4px; margin-bottom:10px; text-align:center;">
+              步驟一：初始錯誤狀態 (S170案號A → S091案號A)
+            </div>
+            
+            <div style="border:1.5px solid #0f172a; border-radius:6px; padding:10px; background:#fafafa; margin-bottom:12px; text-align:center;">
+              <div style="font-weight:bold; font-size:0.85rem; margin-bottom:6px;">S170</div>
+              <div style="border:1px solid #64748b; border-radius:12px; padding:8px 12px; background:#ffffff; display:inline-block; font-weight:bold; font-size:0.8rem;">
+                案號：A<br><span style="font-size:0.75rem; color:#64748b; font-weight:normal;">(申請人誤繕)</span>
+              </div>
+            </div>
+            
+            <div style="text-align:center; color:#2563eb; font-weight:bold; margin:-6px 0 6px 0; font-size:1.1rem;">↓</div>
+            
+            <div style="border:1.5px solid #0f172a; border-radius:6px; padding:10px; background:#fafafa;">
+              <div style="font-weight:bold; font-size:0.85rem; margin-bottom:8px; text-align:center;">S091</div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                <div style="border:1px solid #475569; border-radius:4px; padding:6px; background:#ffffff; text-align:center;">
+                  <div style="font-weight:bold; font-size:0.75rem; border-bottom:1px solid #cbd5e1; padding-bottom:2px; margin-bottom:6px;">案號A影像檔放置處</div>
+                  <div style="background:#15803d; color:white; border-radius:12px; padding:14px 6px; font-weight:bold; font-size:0.8rem; box-shadow:0 1px 2px rgba(0,0,0,0.15);">
+                    影像檔
+                  </div>
+                </div>
+                <div style="border:1px solid #cbd5e1; border-radius:4px; padding:6px; background:#ffffff; text-align:center;">
+                  <div style="font-weight:bold; font-size:0.75rem; border-bottom:1px solid #e2e8f0; padding-bottom:2px; margin-bottom:6px; color:#94a3b8;">案號B影像檔放置處</div>
+                  <div style="height:48px; border:1px dashed #cbd5e1; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#cbd5e1; font-size:0.75rem;">(無資料)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 步驟二 -->
+          <div style="border:1px solid #94a3b8; border-radius:8px; padding:12px; background:#ffffff; box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+            <div style="font-weight:bold; color:#d97706; border-bottom:2px solid #f59e0b; padding-bottom:4px; margin-bottom:10px; text-align:center;">
+              步驟二：僅修改S170案號 (連結錯位)
+            </div>
+            
+            <div style="border:1.5px solid #0f172a; border-radius:6px; padding:10px; background:#fafafa; margin-bottom:12px; text-align:center;">
+              <div style="font-weight:bold; font-size:0.85rem; margin-bottom:6px;">S170</div>
+              <div style="border:1px solid #64748b; border-radius:12px; padding:8px 12px; background:#ffffff; display:inline-block; font-weight:bold; font-size:0.8rem;">
+                案號：B<br><span style="font-size:0.75rem; color:#16a34a; font-weight:bold;">(修正後)</span>
+              </div>
+            </div>
+            
+            <div style="text-align:center; color:#dc2626; font-weight:bold; margin:-6px 0 6px 0; font-size:1.1rem;">↓ <span style="font-size:0.75rem; color:#dc2626;">(尋找B放置處)</span></div>
+            
+            <div style="border:1.5px solid #0f172a; border-radius:6px; padding:10px; background:#fafafa;">
+              <div style="font-weight:bold; font-size:0.85rem; margin-bottom:8px; text-align:center;">S091</div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                <div style="border:1px solid #cbd5e1; border-radius:4px; padding:6px; background:#ffffff; text-align:center;">
+                  <div style="font-weight:bold; font-size:0.75rem; border-bottom:1px solid #cbd5e1; padding-bottom:2px; margin-bottom:6px;">案號A影像檔放置處</div>
+                  <div style="background:#15803d; color:white; border-radius:12px; padding:14px 6px; font-weight:bold; font-size:0.8rem; box-shadow:0 1px 2px rgba(0,0,0,0.15);">
+                    影像檔
+                  </div>
+                </div>
+                <div style="border:2px solid #dc2626; border-radius:4px; padding:6px; background:#fef2f2; text-align:center;">
+                  <div style="font-weight:bold; font-size:0.75rem; border-bottom:1px solid #fca5a5; padding-bottom:2px; margin-bottom:6px; color:#dc2626;">案號B影像檔放置處</div>
+                  <div style="height:48px; border:1px dashed #fca5a5; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#dc2626; font-size:0.75rem; font-weight:bold;">查無影像檔！</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 步驟三 -->
+          <div style="border:1px solid #94a3b8; border-radius:8px; padding:12px; background:#ffffff; box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+            <div style="font-weight:bold; color:#16a34a; border-bottom:2px solid #22c55e; padding-bottom:4px; margin-bottom:10px; text-align:center;">
+              步驟三：同步修改S091案號 (完美對應)
+            </div>
+            
+            <div style="border:1.5px solid #0f172a; border-radius:6px; padding:10px; background:#fafafa; margin-bottom:12px; text-align:center;">
+              <div style="font-weight:bold; font-size:0.85rem; margin-bottom:6px;">S170</div>
+              <div style="border:1px solid #64748b; border-radius:12px; padding:8px 12px; background:#ffffff; display:inline-block; font-weight:bold; font-size:0.8rem;">
+                案號：B<br><span style="font-size:0.75rem; color:#16a34a; font-weight:bold;">(修正後)</span>
+              </div>
+            </div>
+            
+            <div style="text-align:center; color:#16a34a; font-weight:bold; margin:-6px 0 6px 0; font-size:1.1rem;">↓ <span style="font-size:0.75rem; color:#16a34a;">(完美導向B放置處)</span></div>
+            
+            <div style="border:1.5px solid #0f172a; border-radius:6px; padding:10px; background:#fafafa;">
+              <div style="font-weight:bold; font-size:0.85rem; margin-bottom:8px; text-align:center;">S091</div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                <div style="border:1px solid #cbd5e1; border-radius:4px; padding:6px; background:#ffffff; text-align:center;">
+                  <div style="font-weight:bold; font-size:0.75rem; border-bottom:1px solid #e2e8f0; padding-bottom:2px; margin-bottom:6px; color:#94a3b8;">案號A影像檔放置處</div>
+                  <div style="height:48px; border:1px dashed #cbd5e1; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#cbd5e1; font-size:0.75rem;">(已移出)</div>
+                </div>
+                <div style="border:2px solid #16a34a; border-radius:4px; padding:6px; background:#f0fdf4; text-align:center;">
+                  <div style="font-weight:bold; font-size:0.75rem; border-bottom:1px solid #86efac; padding-bottom:2px; margin-bottom:6px; color:#16a34a;">案號B影像檔放置處</div>
+                  <div style="background:#15803d; color:white; border-radius:12px; padding:14px 6px; font-weight:bold; font-size:0.8rem; box-shadow:0 1px 2px rgba(0,0,0,0.15);">
+                    影像檔 (正確連線)
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p><strong>(二) 作業方式</strong></p>
+      <p>以下延續前述「申請人實際意旨應以B案來文，但申請書中誤繕為A案」為例進行說明：</p>
+      <ol class="step-list">
+        <li>點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">公文維護</span> → <span class="btn-badge">案由、案號變更作業</span>，將案號改為B。</li>
+        <li>於 <strong>E網通</strong> 點選 <span class="btn-badge">系統專區</span> → <span class="btn-badge">電子文件庫管理系統(新)</span>。</li>
+        <li>點選 <span class="btn-badge">資料維護</span> → <span class="btn-badge">修改商標收文案號</span>，輸入收文文號。</li>
+        <li>點選 <span class="btn-badge">進行篩選</span>，將該公文所指定案號修改為B，即可正確檢視影像檔。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-2-6">
+      <span class="tag">文案作業 06</span>
+      <h3>六、文／案與09*資料未建立正確關聯</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>因文／案與09*之關聯錯誤，致EDOC開啟09*資料時無法找到正確資料，已知可造成此情況之原因如下：
+          <ul>
+            <li>過去一段期間之註冊後分割案，採用規則與現行<span class="footnote-ref">[20]<span class="popover"><strong>註腳 20</strong>：現行分割案將另產第4、5碼為88（註冊前分割）或89（註冊後分割）之申請案號</span></span>做法不同<span class="footnote-ref">[21]<span class="popover"><strong>註腳 21</strong>：若原申請案號A，核准後註冊號B，申請註冊後分割將部分商品移入新註冊號C，此時資料庫內將紀錄為2筆案號「A-B」與「A-C」</span></span>，資料庫內以「申請案號-註冊號」之方式紀錄，而系統未針對此種情況設定特殊判斷邏輯<span class="footnote-ref">[22]<span class="popover"><strong>註腳 22</strong>：早年註冊後分割案資料庫註記格式為「申請案號-註冊號」，新版EDOC未支援此格式搜尋所致。</span></span>。</li>
+            <li>因系統錯誤導致之問題於113年底至114年初頻繁發生，現已修正。</li>
+            <li>惟申請人或收文櫃台仍可能將案號輸入錯誤，爰仍為偶發情形。</li>
+          </ul>
+        </li>
+        <li>承辦人開啟EDOC顯示錯誤訊息：「未知的身分 查詢案號資訊異常(收文號：***********-*)：查無此文號」。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>於 <strong>E網通</strong> 點選 <span class="btn-badge">系統專區</span> → <span class="btn-badge">電子文件管理系統</span> → <span class="btn-badge">資料維護</span> → <span class="btn-badge">修改商標收文案號</span>，輸入收文文號。</li>
+        <li>將案號修改正確。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-2-7">
+      <span class="tag">文案作業 07</span>
+      <h3>七、變更案由／增減或變更案號</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>申請人以錯誤案由、案號送件，或收文櫃台輸入錯誤案由或案號。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">公文維護</span> → <span class="btn-badge">案由、案號變更作業</span>，輸入收文文號。</li>
+        <li>輸入欲變更之案由／新增或變更之案號。</li>
+        <li><strong>檢查人名ID欄位：</strong>變更案由務必確認人名ID<span class="footnote-ref">[23]<span class="popover"><strong>註腳 23</strong>：因不同案由預設之人名ID身分別不同（如申請人、代理人、異議人、來文機關），未更正會導致函稿無法套用。</span></span>，因不同案由之人名ID無法直接套用，將導致審查人員於審查介面之人名ID無法正確顯示其身分，並造成後續無法儲存辦理結果、也無法找到對應辦理結果適用之函稿（例如：新申請案來文者身分為 <strong>申請人</strong> ，補充答辯來文者身分為 <strong>來文機關</strong> ，若變更案由後未修正身分，則身分別欄位會顯示為空白）。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-2-8">
+      <span class="tag">文案作業 08</span>
+      <h3>八、承辦人變更／指派</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>可能產生此需求情境很多，包含收文時指定承辦人錯誤、人員退休等原因需將案件分派給其他承辦人等狀況。</li>
+        <li>維護人員一些特定作業亦需要此功能（例如：解開重審時，案件移至維護人員處理後，再移回給承辦人）。</li>
+        <li>包含2種操作方式：承辦人改分作業、指派承辦人作業。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <p>依照審查方式（紙本／線上）選擇不同的操作方式：</p>
+      <ul>
+        <li><strong>承辦人改分作業：</strong>點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">公文維護</span> → <span class="btn-badge">承辦人改分作業</span>，輸入收文文號後，系統自動帶出改分日期及原承辦人資訊；輸入新承辦人後點選 <span class="btn-badge">變更承辦人</span>。</li>
+        <li><strong>指派承辦人作業：</strong>點選 <span class="btn-badge">線上審查管理</span> → <span class="btn-badge">管理及維護</span> → <span class="btn-badge">指派承辦人作業</span>，將單選按鈕設定為「案號」；下拉選單依需求挑選，並輸入案號／收文文號後，點選 <span class="btn-badge">查詢</span>；勾選欲調整承辦人案件之核取框後，於新承辦人下拉選單中選擇欲指派之承辦人後，點選 <span class="btn-badge">確定改派</span>。</li>
+      </ul>
+      <div class="alert-box" style="background:#f0fdf4; border-color:#bbf7d0; border-left-color:#16a34a;">
+        <strong>兩者差異比較：</strong><br>
+        • 紙本審查僅能使用「承辦人改分作業」<br>
+        • 線上審查「承辦人改分作業」、「指派承辦人作業」均可使用<br>
+        • 「承辦人改分作業」僅直接將承辦人變更<br>
+        • 「指派承辦人作業」會在流程中增加一筆承辦人變更紀錄，原則線上審查以此方式為主<span class="footnote-ref">[24]<span class="popover"><strong>註腳 24</strong>：線上審查案件則建議優先採用「指派承辦人作業」，以完整留存歷程紀錄。</span></span>
+      </div>
+    </div>
+
+    <div class="rule-card" id="sec-2-9">
+      <span class="tag">文案作業 09</span>
+      <h3>九、線上/紙本審查轉換</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>來文資料錯誤，致使審查方式判斷錯誤。</li>
+        <li>櫃檯收文案由判斷錯誤。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ul>
+        <li><strong>紙本轉線上：</strong>
+          <ul>
+            <li>「分文、外包待處理」階段：電子與紙本分流尚未產生，自21檔直接轉換<span class="footnote-ref">[25]<span class="popover"><strong>註腳 25</strong>：點擊檔案維護→文案資料維護作業→一般行政公文基本資料維護作業，輸入收文文號後，會自動依照該文的辦理方式，對應顯示轉換為紙本或線上的按鈕</span></span>即可；紙本於外包待處理流程結束後產生線上審查流程<span class="footnote-ref">[26]<span class="popover"><strong>註腳 26</strong>：紙本來文者，點擊公文管理→分文相關作業→一般案審查資料首次鍵入，線上審查案件於此步驟鍵入完成後，即產生線上審查流程</span></span>，紙本需製卷歸檔，僅線上審查流程移交承辦人。</li>
+            <li>審查階段：紙本移回外包2000，重新進行外包待處理流程，結束後產生線上審查流程，紙本需製卷歸檔，僅線上審查流程移交承辦人。</li>
+          </ul>
+        </li>
+        <li><strong>線上轉紙本：</strong>
+          <ul>
+            <li>「分文、外包待處理」階段：紙本申請者，電子與紙本分流尚未產生，自21檔直接轉換即可；電子申請者，因無紙本需將案件印出交移交承辦人。</li>
+            <li>審查階段：紙本申請者，需將紙本調回移承辦人；電子申請者，因無紙本需將案件印出交移交承辦人。</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-2-10">
+      <span class="tag">文案作業 10</span>
+      <h3>十、無案號訴願、行政訴訟案之分文、建檔問題</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>本局於113年5月1日前發布商標代理人登錄及管理辦法後，出現無案號之訴願、行政訴訟文。</li>
+        <li><strong>修法前：</strong>商標所有訴願、行政訴訟均針對特定商標，都有案號（申請案號、註冊號、核駁號、爭議號…等），系統建置時設定部份案由必須輸入案號，其中訴願、行政訴訟屬於此類必須輸入案號之案由。</li>
+        <li><strong>修法後：</strong>出現部分民眾因資格不符無法成為商標代理人，因而提出訴願、行政訴訟的情況，此類案件非針對特定商標故無案號<span class="footnote-ref">[27]<span class="popover"><strong>註腳 27</strong>：此類不服不予登錄處分提出之訴願，因無對應之商標申請案號或註冊號，屬無案號案件。</span></span>，造成分文、外包建檔步驟時發生錯誤。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>將案由變更為 <span class="btn-badge">T 一般行政</span> ，通過需檢核案號之步驟後再將案由改回。</li>
+        <li>點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">公文維護</span> → <span class="btn-badge">案由案號變更作業</span>，將案由變更為 <span class="btn-badge">T 一般行政</span> 後，清除案號及商標種類欄位。</li>
+        <li>點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">分文相關作業</span> → <span class="btn-badge">分文作業</span>，找到此案件並輸入前置文號、承辦人後，點選 <span class="btn-badge">確定帶回</span>。</li>
+        <li>點選 <span class="btn-badge">重新判讀</span>，因無案號顯示未通過；點選 <span class="btn-badge">強制通過</span> 完成分文作業。</li>
+        <li>點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">分文相關作業</span> → <span class="btn-badge">一般案審查資料首次鍵入作業</span> 並完成鍵入作業。</li>
+        <li>再次點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">公文維護</span> → <span class="btn-badge">案由案號變更作業</span>，將案由改回後，並將案號、商標種類補回<span class="footnote-ref">[28]<span class="popover"><strong>註腳 28</strong>：有案號雖可強制通過分文作業，惟鍵入作業需檢查案號是否符合業務邏輯，而案由 W2其他訴調 預設取F99開頭之案號，無法通過檢核進入鍵入作業，故需先將案號清空；又因此類案件歸入文件庫時，仍需以F99案號歸檔，故完成鍵入作業後，需再將案號補回，其中案號不需手動輸入，選定商標種類後點選存檔即會自動取案號。</span></span>。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-2-11">
+      <span class="tag">文案作業 11</span>
+      <h3>十一、紙本／線上審查轉換流程錯誤</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>送件方式與審查方式均有線上與紙本二種，審查前之作業相互不同：
+          <ul>
+            <li>紙本送件/紙本審查：外包2000將鍵入案件資料，紙本公文移承辦人審查。</li>
+            <li>紙本送件/線上審查：外包2000依鍵入案件資料，產生線上審查流程移承辦人審查，並將紙本公文移檔案室8400歸檔。</li>
+            <li>線上送件/紙本審查：秘書室列印紙本公文，移外包2000鍵入案件資料，紙本公文移承辦人審查。</li>
+            <li>線上送件/線上審查：外包2000依鍵入案件資料，產生線上審查流程移承辦人審查。</li>
+          </ul>
+        </li>
+        <li>因申請人或收文櫃台之錯誤，以不正確案由收進本局，承辦人A因不清楚作業方式，變更案由後，認為需將案件「移給」正確承辦人B，將紙本公文移交後，造成承辦人B單一案件同時有線上審查流程，又有紙本公文流程<span class="footnote-ref">[29]<span class="popover"><strong>註腳 29</strong>：此為常見之雙重流程錯誤，需退回外包鍵入節點重新分流。</span></span>。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>以「退回發生錯誤之流程」方式排除問題。</li>
+        <li>所有類型的案件與審查方式，均會到達 <strong>外包2000鍵入</strong> 作業，後續產生線上流程、紙本移交承辦、紙本歸檔等等差異均在此流程之後。故在變更案由之後，請承辦人移交外包2000重新執行正確流程即可。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-2-12">
+      <span class="tag">文案作業 12</span>
+      <h3>十二、後續來文未辦結致主案無法辦結</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>部分案由需特定辦理結果才可辦結。承辦人可能選擇之辦理結果不正確，導致承辦人自認已處理，但實際未辦結。當主案有後續來文未辦結時，將導致主案無法選擇辦理結果。</li>
+        <li><strong>辦結規則與案例：</strong>主要案由通常需發文結案、非主要案由則可併辦結案<span class="footnote-ref">[30]<span class="popover"><strong>註腳 30</strong>：若主要案由選擇撤回或不受理，亦必須發文通知申請人方得辦結。</span></span>。例如：審查人員於第3、第4個來文，辦理結果都選擇「撤回」。分析錯誤處：第3個來文 <span class="btn-badge">AA 註冊前變更</span> 雖為主要案由，且屬於特例，按照規則，欲選擇此種「非核准」辦理結果，必須發文才可結案；將 <span class="btn-badge">R5 註冊前變更撤回</span> 之辦理結果選「撤回」，意即「撤回」這個 R5 的申請，R5 為非主要案由，應選擇併辦即可結案。</li>
+      </ul>
+
+      <!-- HTML/CSS 手繪還原圖示 後續來文未辦結致主案無法辦結.png -->
+      <div class="ui-mockup">
+        <div class="ui-browser-bar">🌐 系統介面模擬圖 (原圖 後續來文未辦結致主案無法辦結.png)</div>
+        <p style="font-weight:bold; color:#1e40af; margin-bottom:8px;">案件來文與辦理結果清單對照範例：</p>
+        <table class="ui-table">
+          <thead>
+            <tr>
+              <th>項次</th>
+              <th>收文文號</th>
+              <th>案由</th>
+              <th>辦理結果</th>
+              <th>狀態分析</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>1130000001</td>
+              <td>A 新申請</td>
+              <td>(尚未辦結)</td>
+              <td><span style="color:#d97706; font-weight:bold;">主案：因後續來文未結而受阻</span></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>1130000002</td>
+              <td>V 補正</td>
+              <td>併辦</td>
+              <td>已辦結</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>1130000003</td>
+              <td>AA 註冊前變更</td>
+              <td>撤回 (選錯)</td>
+              <td><span style="color:#dc2626; font-weight:bold;">❌ 未發文無法結案</span></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>1130000004</td>
+              <td>R5 變更撤回</td>
+              <td>撤回 (選錯)</td>
+              <td><span style="color:#dc2626; font-weight:bold;">❌ 應選併辦而非撤回</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>(二) 一文多案特殊情況：主案中首筆案號已失效<span class="footnote-ref">[31]<span class="popover"><strong>註腳 31</strong>：若首筆案號已失效，系統無法執行併辦，需先變更主案首筆案號為有效案號。</span></span></strong></p>
+      <ul>
+        <li>一文多案之後續來文，係以主案首筆案號作為後續來文案號。</li>
+        <li>因檢核規則設計考量未盡周全，無效案之來文之辦理結果僅能是「不受理」，故首筆案號已失效，將導致該後續來文無法併辦。</li>
+        <li><strong>解決方式：</strong>
+          <ol class="step-list">
+            <li>點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">公文維護</span> → <span class="btn-badge">案由、案號變更作業</span>。</li>
+            <li>調整主案之案號順序，將首筆案號更換為有效案。</li>
+            <li>調整後續來文之案號，使其與主案首筆案號一致。</li>
+          </ol>
+        </li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-2-13">
+      <span class="tag">文案作業 13</span>
+      <h3>十三、註冊前變更一文多案時辦理結果錯誤</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>一文多案因同時修改多個申請案件資料，又該註冊前變更的「多案」，未必均為同一承辦人，不可由單一承辦人取消辦理結果<span class="footnote-ref">[32]<span class="popover"><strong>註腳 32</strong>：因一文多案涉及跨科別多位承辦人權限，需維護人員於資料庫端解開21檔。</span></span>。故註冊前變更一文多案時，一旦選錯辦理結果，承辦人無法自行取消辦理結果。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ul>
+        <li><strong>註冊前變更文流程仍位於承辦人手上：</strong>仍由該承辦人持有，僅需維護人員直接解開21檔。</li>
+        <li><strong>註冊前變更文流程已流向後續發文歸檔步驟：</strong>因流程已流向其他階段，單純解開21檔，無法讓流程回到承辦人身上，此時僅能通知維護廠商處理。</li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-2-14">
+      <span class="tag">文案作業 14</span>
+      <h3>十四、發文時通知無辦理結果／辦理結果不符</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>製稿時，可選函稿類型係依照 <strong>案由</strong> 、 <strong>辦理結果</strong> 決定，若以非正確之組合發文，送至發文室時將通知無辦理結果／辦理結果不符<span class="footnote-ref">[33]<span class="popover"><strong>註腳 33</strong>：稿型與辦理結果需嚴格匹配，選錯稿型時發文室點收將會彈出異常提示。</span></span>。</li>
+        <li>既已通過 <strong>案由</strong> 、 <strong>辦理結果</strong> 決定可選稿型，代表選用的函稿必定是對應此 <strong>案由</strong> 與 <strong>辦理結果</strong> ，又為何會產生以非正確之組合發文之問題？因仍存在部分函稿，於紙本與線上審查並行的狀況。紙本與線上審查之歸檔方式差異，導致部分函稿於在未選／已選辦理結果之下，均會出現供挑選。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>直接退文取消辦理結果。</li>
+        <li>挑選正確的 <strong>案由</strong> 、 <strong>辦理結果</strong> 及對應函稿，重新製稿發文即可。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-2-15">
+      <span class="tag">文案作業 15</span>
+      <h3>十五、文案解開重辦／重審</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>各類文／案辦結後（通常在公告前）發現處分錯誤，於公告處分前將文／案重新辦理。</li>
+        <li>若為 <strong>核駁新案撤銷重審</strong> ，因現行檢索系統規則問題，必須以新申請號辦理<span class="footnote-ref">[34]<span class="popover"><strong>註腳 34</strong>：因檢索系統S281/S282無法於同一案號下重新開啟已被核駁之處分歷程。</span></span>，流程詳見假收文作業。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li><strong>作業前檢查：</strong>檢視文／案流程。若仍在承辦人手中，則可直接執行步驟2之後；若已送檔案室歸檔，則點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">收文查詢</span> → <span class="btn-badge">公文流程查詢作業</span>，確認流程已達 <strong>檔案室已點收</strong>。若為核准新案，需檢查是否已給予註冊號。</li>
+        <li><strong>解開71檔 ─ 本步驟僅核准新案解開重審需執行：</strong>點選 <span class="btn-badge">線上審查管理</span> → <span class="btn-badge">管理及維護</span> → <span class="btn-badge">線上審查歸檔重審作業</span>，輸入新申請案之主案文號；確認顯示狀態為 <strong>核准</strong> ，點選 <span class="btn-badge">確定並稍等背景作業<span class="footnote-ref">[35]<span class="popover"><strong>註腳 35</strong>： 確定按鈕 務必只點選1次 ，因本功能需執行片刻，而系統並未設置「作業中」提示及防連續觸及功能，切勿心急連續點選 </span></span></span> ，待系統彈出作業完成之提示；點選 <span class="btn-badge">公文管理</span> → <span class="btn-badge">收文查詢</span> → <span class="btn-badge">公文流程查詢作業</span>，檢視文／案流程是否已回到原承辦人。</li>
+        <li><strong>解開21檔：</strong>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">文案資料維護作業</span> → <span class="btn-badge">一般行政公文基本資料維護作業</span>，輸入欲解開之收文文號；清除21檔中資料（一般行政公文基本資料維護頁籤：辦理結果下拉選單調整為「--請選擇--」、銷號原因下拉選單調整為「--請選擇--」、辦理日期欄位清空；案件清單頁籤：點選 <span class="btn-badge">修改</span>，將辦理結果下拉選單調整為「--請選擇--」）；回到一般行政公文基本資料維護頁籤，點選 <span class="btn-badge">存檔</span>。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-2-16">
+      <span class="tag">文案作業 16</span>
+      <h3>十六、審定後註冊前變更</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>依規定，於公告前辦理變更即屬 <span class="btn-badge">AA 註冊前變更</span> ，惟編列註冊號、公報資料、印製註冊證…等作業均需處理時間，需視各項作業期程判斷調整方式。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <p>先檢視目前流程，於不同區間依照不同方式處理：</p>
+      <ul>
+        <li><strong>區間 1（核准審定）：</strong>修正71檔。此時僅需將71檔調整正確，後續會以正確的71檔為基礎，產出正確的41檔以及公報。</li>
+        <li><strong>區間 2<span class="footnote-ref">[36]<span class="popover"><strong>註腳 36</strong>：區間2代表已排入公報但尚未公告，需同步更正71檔與已產製之41檔。</span></span>（排入公報 / 印製註冊證）：</strong>修正71檔、41檔、公報重新產製。此時41檔、公報均已產製，但因尚未公告，修正後會以正確資訊產製註冊證。</li>
+        <li><strong>區間 3（公告）：</strong>
+          <ul>
+            <li>一般情況：修正71檔、41檔、公報重新產製、註冊證重新印製。</li>
+            <li>特殊情況：時程上已無法修正資料時，緩辦至公告日後，變更案由為 <span class="btn-badge">B 註冊變更</span> 辦理<span class="footnote-ref">[37]<span class="popover"><strong>註腳 37</strong>：若公告臨近無法及時抽換公報與註冊證，採權宜作法於公告後辦理註冊變更。</span></span>，並確認變更案由後人名ID資料（例如：郵戳時間為公告前，而本局承辦人領案時已公告）。</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-2-17">
+      <span class="tag">文案作業 17</span>
+      <h3>十七、審定後註冊前分割</h3>
+      <p><strong>【情境與作業方式】</strong>此時已審定，無法再將已歸檔案件重新解開再分割，需待公告日後改以 <span class="btn-badge">BB 註冊後分割</span> 方式辦理<span class="footnote-ref">[38]<span class="popover"><strong>註腳 38</strong>：審定後至公告前期間，系統不支援註冊前分割解開作業。</span></span>。</p>
+    </div>
+
+    <div class="rule-card" id="sec-2-18">
+      <span class="tag">文案作業 18</span>
+      <h3>十八、修改註冊簿內容</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>原申請案71檔資料錯誤。</li>
+        <li>註冊後各類 <span class="btn-badge">B 註冊變更</span> 、 <span class="btn-badge">D 延展</span> 、 <span class="btn-badge">E 移轉</span> 、 <span class="btn-badge">I 設定質權</span> 、 <span class="btn-badge">J 授權</span> …等案件資料錯誤，導致註冊簿 <strong>異動事項</strong> 註記錯誤。</li>
+        <li>部分案件需特殊註記。如該事項同時需刊登於公報，應參考「已註冊商標之文案、註冊簿與公報資料傳遞」。</li>
+      </ul>
+      <p><strong>(二) 系統規則說明</strong></p>
+      <p>註冊簿之組成，包含下圖中3個區域，資料來源各異：</p>
+      <ul>
+        <li>🟢 綠色區域：41檔<span class="footnote-ref">[39]<span class="popover"><strong>註腳 39</strong>：顯示商標權最新狀態，包含專用期限、代理人、商標權人現行資訊。</span></span>。專用期限欄位需根據商標權實際專用期限，而專用期限更新方式係延展公文於核准時，系統同步修改41檔專用期限資料。</li>
+        <li>🔴 紅色區域：71檔<span class="footnote-ref">[40]<span class="popover"><strong>註腳 40</strong>：保留核准審定當時之原始公告事項，不隨後續變更而覆蓋。</span></span>。為「註冊公告當時」之公告事項，註冊時系統依71檔產生41檔資料，惟41檔資料於 <span class="btn-badge">B 註冊變更</span> 、 <span class="btn-badge">D 延展</span> 、 <span class="btn-badge">E 移轉</span> 時可能異動，無法保留最初審定時之資訊，而71檔於審定時不再異動，爰採用71檔資料。</li>
+        <li>🔵 藍色區域：註冊簿異動事項資料。各類 <span class="btn-badge">B 註冊變更</span> 、 <span class="btn-badge">D 延展</span> 、 <span class="btn-badge">E 移轉</span> 、 <span class="btn-badge">I 設定質權</span> 、 <span class="btn-badge">J 授權</span> …等案件核准時，系統同步新增異動事項資料。</li>
+      </ul>
+
+      <!-- HTML/CSS 手繪還原圖示 修改註冊簿內容-1.png 三框樣式 -->
+      <div class="ui-mockup">
+        <div class="ui-browser-bar">🌐 系統介面模擬圖 (原圖 修改註冊簿內容-1.png 精準三框還原)</div>
+        <div class="cert-mockup">
+          <!-- 1. 綠色框區 -->
+          <div class="cert-green-box">
+            <div style="text-align:center; font-size:1.1rem; font-weight:bold; color:#16a34a; margin-bottom:8px;">
+              🟢 綠色框區域（資料來源：41檔）─ 經濟部智慧財產局商標註冊簿
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
+              <div>註冊號：01234567</div>
+              <div>商標種類：商標</div>
+              <div>列印日期：115/09/18</div>
+              <div>註冊日期：095/11/01</div>
+              <div>註冊公告日期：095/11/01</div>
+              <div>專用期限：125/10/31</div>
+            </div>
+          </div>
+
+          <!-- 2. 紅色框區 -->
+          <div class="cert-red-box">
+            <div style="text-align:center; font-size:1.1rem; font-weight:bold; color:#dc2626; margin-bottom:8px;">
+              🔴 紅色框區域（資料來源：71檔）─ 註冊公告事項
+            </div>
+            <div style="display:flex; gap:16px;">
+              <div style="border:1px solid #cbd5e1; padding:12px; text-align:center; min-width:120px; background:#fff;">
+                商標圖樣<br>【墨色】【平面】<br><br>
+                <strong style="font-size:1.2rem; font-family:serif;">The LANDIS</strong>
+              </div>
+              <div style="flex:1;">
+                <p style="margin:2px 0;">商標名稱：THE LANDIS</p>
+                <p style="margin:2px 0;">申請案號：095008083 ｜ 申請日期：095/02/21</p>
+                <p style="margin:2px 0;">申請人：亞都麗緻大飯店股份有限公司 (臺北市中山區...)</p>
+                <p style="margin:2px 0;">代理人：賴淑芬</p>
+                <p style="margin:2px 0;">指定商品：第024類 壁布、絲被、被套、毛巾、浴巾...</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. 藍色框區 -->
+          <div class="cert-blue-box">
+            <div style="text-align:center; font-size:1.1rem; font-weight:bold; color:#2563eb; margin-bottom:8px;">
+              🔵 藍色框區域（資料來源：註冊簿異動事項資料）─ 異動事項
+            </div>
+            <table class="ui-table" style="background:#fff;">
+              <thead>
+                <tr style="background:#dbeafe; color:#1e40af;">
+                  <th>公告日期</th>
+                  <th>公告卷期</th>
+                  <th>異動事項</th>
+                  <th>異動內容</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>105/07/16</td>
+                  <td>43卷014期</td>
+                  <td>延展</td>
+                  <td>代表人印鑑：變更 ｜ 權利期間延展至：115/10/31</td>
+                </tr>
+                <tr>
+                  <td>115/07/16</td>
+                  <td>53卷014期</td>
+                  <td>延展</td>
+                  <td>代理人變更為：楊祺雄、吳俊彥 ｜ 權利期間延展至：125/10/31</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <p><strong>(三) 作業方式</strong></p>
+      <p>檢視需調整之項目所在區域，分別修改不同資料：</p>
+      <ul>
+        <li><strong>綠色區域：</strong>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">文案資料維護作業</span> → <span class="btn-badge">商標權資料維護作業</span>，調整41檔案資料<span class="footnote-ref">[41]<span class="popover"><strong>註腳 41</strong>：原則上僅「專用期限」可能錯誤，「專用期限」應通過 D 延展 調整，若本項有錯誤， 應優先檢視延展案是否辦理錯誤、同步修正41檔功能是否異常，不宜直接修改41檔資料</span></span>。</li>
+        <li><strong>紅色區域：</strong>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">文案資料維護作業</span> → <span class="btn-badge">新申請註冊案基本資料維護作業</span>，調整71檔資料。</li>
+        <li><strong>藍色區域：</strong>
+          <ol class="step-list">
+            <li>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">註冊簿異動事項資料維護作業</span> 或 <span class="btn-badge">註冊簿異動資料排序維護作業</span>，輸入商標種類與註冊號。</li>
+            <li>點選 <span class="btn-badge">查詢</span>，顯示本件註冊商標所有異動事項歷史紀錄，此紀錄係依照收文號分類（例如：同日申請 <span class="btn-badge">D 延展</span> 與 <span class="btn-badge">E 移轉</span> ，二案為不同收文文號，核准後分為2筆紀錄）。</li>
+            <li>修改資料：點選加註順序，可修改該筆紀錄之基本資料。其中備註欄位各選項如下<span class="footnote-ref">[42]<span class="popover"><strong>註腳 42</strong>：備註欄位下拉選單包含：顯示圖形、變更商品、使用規範書修改。</span></span>：
+              <ul>
+                <li><strong>空白：</strong>無其他效果。</li>
+                <li><strong>顯示圖形：</strong>於公報顯示修正後商標圖樣。</li>
+                <li><strong>變更商品：</strong>於註冊簿最末顯示現行商品與服務。</li>
+                <li><strong>使用規範書修改：</strong>於公報顯示最新使用規範書。</li>
+              </ul>
+              點選明細→序號，可修改該筆紀錄中特定細目。
+            </li>
+          </ol>
+        </li>
+      </ul>
+
+      <!-- HTML/CSS 手繪還原圖示 修改註冊簿內容-2.png 下拉選單 -->
+      <div class="ui-mockup">
+        <div class="ui-browser-bar">🌐 系統介面模擬圖 (原圖 修改註冊簿內容-2.png)</div>
+        <div style="background:#0284c7; color:white; padding:6px 12px; font-weight:bold; border-radius:4px; margin-bottom:12px;">
+          註冊簿異動事項資料維護作業
+        </div>
+        <div class="ui-row">
+          <span>*商標種類：<input type="text" class="ui-input" value="T 商標" readonly style="width:100px;"></span>
+          <span>*註冊號：<input type="text" class="ui-input" value="00259295" readonly style="width:120px;"></span>
+          <button class="ui-btn">查詢</button>
+          <button class="ui-btn">清除</button>
+        </div>
+        <div style="border:1px solid #cbd5e1; padding:10px; background:#fff; border-radius:4px;">
+          <div style="color:#dc2626; font-weight:bold; margin-bottom:8px;">紅圈處標示：備註欄位下拉選單</div>
+          <select class="ui-input highlight-red" style="font-weight:bold; width:180px;">
+            <option>變更商品</option>
+            <option>顯示圖形</option>
+            <option>使用規範書修改</option>
+          </select>
+        </div>
+      </div>
+
+      <p><strong>(四) 書寫規則</strong></p>
+      <ul>
+        <li>除英文名稱、英文地址等項目外，其餘項目需注意保持字元數為偶數。</li>
+        <li>類別依「第003 類」格式書寫；連續多個類別依「第003 、004 、035 類」格式書寫。</li>
+        <li>部分延展時，將所有不延展之類別或項目統一寫於最後（例如：第003 、004 類不延展）。</li>
+        <li>商標權人、代理人資訊需區分不同人者：共有商標之商標權人資訊異動，應標註商標權人名稱；複數代理人商標之代理人資訊異動，應標註代理人名稱（例如：「商標權人中文地址：○○○○○○」應調整為「商標權人○○○中文地址：○○○○○○」）。</li>
+        <li>共有商標單獨委任/解除委任/變更代理人者：於代理人後方加註委任者（例如：本次由商標權人○○○、○○○自行辦理延展註冊，撤銷代理人。商標權人○○○之代理人未變更。）。</li>
+        <li>應同時調整「商標公報雜項資料」：點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">文案資料維護作業</span> → <span class="btn-badge">商標公報雜項資料維護作業</span>，輸入收文文號或註冊號；點選項次後調整該項內容（例如：代理人：○○○(僅受○○○、○○○委任代理)）。</li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-2-19">
+      <span class="tag">文案作業 19</span>
+      <h3>十九、單案包含多筆處分致S282單筆詳表無法顯示</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>尚未開發撰寫公文系統前，發文係手寫稿批核後，移繕打人員繕打發文。因各項系統建置不完善，發文後無法自動將紀錄寫入系統，係發文後由檔案室外包人員將發文紀錄鍵入系統。</li>
+        <li>案件若撤銷重審時，偶有檔案室人員遺漏未修正系統中原本處分紀錄，又於系統中鍵入新處分，致單案包含多個處分，造成檢索系統判斷異常<span class="footnote-ref">[43]<span class="popover"><strong>註腳 43</strong>：早期手寫稿歷史資料鍵入時重複輸入處分號，需人工刪除多餘發文號。</span></span>。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>點選 <span class="btn-badge">檔卷條碼管理系統</span> → <span class="btn-badge">調卷作業</span> → <span class="btn-badge">調卷輸入作業</span>，將案卷調回。</li>
+        <li>查閱過去辦理歷史，找出應刪除之處分及其發文文號。</li>
+        <li>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">文案資料維護作業</span> → <span class="btn-badge">發文文號資料維護修改作業</span>，挑選發文文號／案號並輸入查詢號碼。</li>
+        <li>依發文文號勾選應刪除之處份，點選 <span class="btn-badge">刪除發文號</span>。</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 分頁三：參、人員相關異動 -->
+  <div class="tab-panel" id="tab-3">
+    <h2 class="section-title">參、人員相關異動</h2>
+
+    
+      <div class="rule-card" id="sec-3-1">
+        <span class="tag">人員異動 01</span>
+        <h3>一、人員新進、升遷、調科</h3>
+        <p><strong>(一) 情境與說明</strong></p>
+        <ul>
+          <li>人員新進異動完成後，務必檢視「任職滿1年得指派為評定委員」作業。</li>
+          <li>此類異動因涉及多個系統權限調整，除 S170 外其他系統權限需另外開立申辦單處理。</li>
+        </ul>
+        <p><strong>(二) 作業方式</strong></p>
+        <ol class="step-list">
+          <li><strong>開立資訊申辦單：</strong><br>
+            於 <strong>E網通</strong> 點選 <span class="btn-badge">系統專區</span> → <span class="btn-badge">資訊作業表單管理系統</span> → <span class="btn-badge">表單申請</span> → <span class="btn-badge">資訊作業申辦</span>，填寫資訊申辦單。其中選擇系統欄位挑選 <span class="btn-badge">010 目錄服務系統<span class="footnote-ref">[44]<span class="popover"><strong>註腳 44</strong>：010為單一簽入與系統跨權限管理中心。</span></span></span> 即可。採「一個蘿蔔一個坑」概念填寫需求說明，以「比照某位人員」方式填寫（比照對象挑選 <strong>該職位原人員</strong> 或 <strong>相同權限的人員</strong>）。
+            
+            <!-- 程式開發者風格一鍵複製範例區塊 -->
+            <div style="margin-top:12px; display:flex; flex-direction:column; gap:12px;">
+              <div style="background:#1e293b; color:#f8fafc; border-radius:6px; padding:12px 16px; font-family:monospace; font-size:0.88rem; position:relative;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #334155; padding-bottom:6px; color:#94a3b8; font-size:0.8rem; font-weight:bold;">
+                  <span>(一) 比照該職位原人員</span>
+                  <button onclick="navigator.clipboard.writeText('商標權組○○○（員工編號+姓名），原任○○○（科別+職稱），於○年○月○日轉／升任○○○（科別+職稱），請調整其權限比照本職位原人員○○○（員工編號+姓名），並注意現○○○（員工編號+姓名）現已轉／升任○○○（科別+職稱），請依○○○（員工編號+姓名）原任○○○（科別+職稱）之權限調整。'); alert('已複製範例文字！');" style="background:#3b82f6; color:white; border:none; padding:2px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer; font-weight:bold;">複製</button>
+                </div>
+                <div>比照該職位原人員：商標權組○○○（員工編號+姓名），原任○○○（科別+職稱），於○年○月○日轉／升任○○○（科別+職稱），請調整其權限比照本職位原人員○○○（員工編號+姓名），並注意現○○○（員工編號+姓名）現已轉／升任○○○（科別+職稱），請依○○○（員工編號+姓名）原任○○○（科別+職稱）之權限調整。</div>
+                <div style="color:#cbd5e1; font-size:0.8rem; margin-top:6px;">(例如：商標權組00353王德博，原任副組長，於115年1月22日升任組長，請調整其權限比照本職位原人員40036胡秉倫，並注意現40036胡秉倫現已升任副局長，請依40036胡秉倫原任組長之權限調整。)</div>
+              </div>
+
+              <div style="background:#1e293b; color:#f8fafc; border-radius:6px; padding:12px 16px; font-family:monospace; font-size:0.88rem; position:relative;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #334155; padding-bottom:6px; color:#94a3b8; font-size:0.8rem; font-weight:bold;">
+                  <span>(二) 比照相同權限人員</span>
+                  <button onclick="navigator.clipboard.writeText('商標權組○○○（員工編號+姓名），原任○○○（科別+職稱），於○年○月○日轉／升任○○○（科別+職稱），請調整其權限比照○○○（員工編號+姓名）。'); alert('已複製範例文字！');" style="background:#3b82f6; color:white; border:none; padding:2px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer; font-weight:bold;">複製</button>
+                </div>
+                <div>比照相同權限人員：商標權組○○○（員工編號+姓名），原任○○○（科別+職稱），於○年○月○日轉／升任○○○（科別+職稱），請調整其權限比照○○○（員工編號+姓名）。</div>
+                <div style="color:#cbd5e1; font-size:0.8rem; margin-top:6px;">(例如：商標權組00496楊子儉，原任註冊審查二科商標助理審查官，於115年1月14日升任註冊審查二科商標審查官，請調整其權限比照20682張瑜珊。)</div>
+              </div>
+            </div>
+          </li>
+<li><strong>檢視異動人員是否仍持有案件：</strong>點選 <span class="btn-badge">資料查詢</span> → <span class="btn-badge">未辦結查詢作業</span>，承辦人欄位挑選為該異動人員；點選 <span class="btn-badge">查詢</span>，檢視是否已無持有案件，若仍持有案件，應優先請該科科長將案件全數改派完畢。</li>
+        <li><strong>調整人員角色設定：</strong>點選 <span class="btn-badge">線上審查管理</span> → <span class="btn-badge">管理及維護</span> → <span class="btn-badge">人員角色設定</span>，影響線上審查相關權限。
+
+          <!-- HTML/CSS 手繪還原圖示 人員新進、升遷、調科-1.png -->
+          <div class="ui-mockup">
+            <div class="ui-browser-bar">🌐 系統介面模擬圖 (原圖 人員新進、升遷、調科-1.png)</div>
+            <div style="background:#0284c7; color:white; padding:6px 12px; font-weight:bold; border-radius:4px; margin-bottom:12px;">
+              人員角色設定介面
+            </div>
+            <div class="ui-row">
+              <span>單位組別：<input type="text" class="ui-input" value="商標權組註冊審查三科" readonly style="width:180px;"></span>
+              <span>員工編號：<input type="text" class="ui-input" value="21015-曾沛恩" readonly style="width:140px;"></span>
+            </div>
+            <div style="border:1px solid #cbd5e1; padding:10px; background:#fff; border-radius:4px; font-size:0.82rem;">
+              <strong>線上審查身份核取方塊對照：</strong><br>
+              ☑ 組長 ☑ 副組長 ☑ 系統維護人員 ☑ 行政管理科科長 ☑ 審查一科科長 ☑ 審查二科科長 ☑ 審查三科科長 ☑ 審查四科科長 ☑ 爭議審查科科長 ☑ 審查科審查人員...
+            </div>
+          </div>
+        </li>
+
+        <li><strong>調整承辦人基本資料：</strong>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">基本資料維護作業</span> → <span class="btn-badge">承辦人基本資料維護作業</span>。維護到職日、任現職日期、離職日期（離職日期務必參照人員退休離職作業辦理）及地址歷程。
+
+          <!-- HTML/CSS 手繪還原圖示 人員新進、升遷、調科-2.png -->
+          <div class="ui-mockup">
+            <div class="ui-browser-bar">🌐 系統介面模擬圖 (原圖 人員新進、升遷、調科-2.png)</div>
+            <div style="background:#0284c7; color:white; padding:6px 12px; font-weight:bold; border-radius:4px; margin-bottom:12px;">
+              承辦人基本資料維護作業
+            </div>
+            <div class="ui-row">
+              <span>*員工編號：<input type="text" class="ui-input" value="21015" readonly style="width:100px;"></span>
+              <span>承辦人姓名：<input type="text" class="ui-input" value="曾沛恩" readonly style="width:100px;"></span>
+              <span>電話：<input type="text" class="ui-input" value="02-23767548" readonly style="width:120px;"></span>
+            </div>
+          </div>
+        </li>
+
+        <li><strong>調整印鑑管理作業：</strong>點選 <span class="btn-badge">線上審查管理</span> → <span class="btn-badge">管理及維護</span> → <span class="btn-badge">印鑑管理作業</span>。顯示之印鑑圖像，係以 <strong>承辦人基本資料</strong> 所拼湊出之結果， <strong>並非實際印鑑<span class="footnote-ref">[45]<span class="popover"><strong>註腳 45</strong>： 系統會自動抓取「承辦人基本資料」之姓名與職稱合成印鑑字樣。 </span></span></strong>。點選 <span class="btn-badge">全部重新產製</span>，依最新 <strong>承辦人基本資料</strong> 產製更新後印鑑。如為新進之新申請案審查人員，應在行事曆中設定1年後提醒，設定可指派為評定委員。
+
+          <!-- HTML/CSS 手繪還原圖示 人員新進、升遷、調科-3.png -->
+          <div class="ui-mockup">
+            <div class="ui-browser-bar">🌐 系統介面模擬圖 (原圖 人員新進、升遷、調科-3.png)</div>
+            <div style="background:#0284c7; color:white; padding:6px 12px; font-weight:bold; border-radius:4px; margin-bottom:12px;">
+              印鑑管理介面
+            </div>
+            <table class="ui-table">
+              <thead>
+                <tr><th>序號</th><th>印鑑圖像 (紅色標記處)</th><th>使用人員</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><span style="color:#dc2626; border:1px solid #ef4444; padding:2px 6px; font-weight:bold;">商標助理審查官 曾沛恩</span></td>
+                  <td>曾沛恩</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-3-2">
+      <span class="tag">人員異動 02</span>
+      <h3>二、人員退休、離職</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>作業完成後，務必於行事曆中提醒1年後，補上承辦人基本資料維護作業中離職日期。此欄位一旦寫入，系統計算績效時即排除此人員，考量年度績效計算之需求，爰固定於 **1年後** 補上離職日期<span class="footnote-ref">[46]<span class="popover"><strong>註腳 46</strong>：避免提前寫入離職日期導致當年度組內績效統計時被系統自動剔除。</span></span>。</li>
+        <li>資訊申辦單由其他人處理，僅需處理S170之權限。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li><strong>檢視異動人員是否仍持有案件：</strong>點選 <span class="btn-badge">資料查詢</span> → <span class="btn-badge">未辦結查詢作業</span>，承辦人欄位挑選為該異動人員；點選 <span class="btn-badge">查詢</span>，檢視是否已無持有案件，若仍持有案件，應優先請該科科長將案件全數改派完畢。</li>
+        <li><strong>調整承辦人基本資料：</strong>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">基本資料維護作業</span> → <span class="btn-badge">承辦人基本資料維護作業</span>，於地址欄位寫入離職資訊（寫法：○（日期）退休／商調○（新單位）；）。</li>
+        <li><strong>補註記離職日期：</strong>於行事曆中，加入1年後提醒補回離職日期之通知。1年後，點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">基本資料維護作業</span> → <span class="btn-badge">承辦人基本資料維護作業</span>，將1年前之離職日期補回。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-3-3">
+      <span class="tag">人員異動 03</span>
+      <h3>三、任職滿1年得指派為評定委員</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>新案審查人員需任職一年後，才可被指派為評定委員<span class="footnote-ref">[47]<span class="popover"><strong>註腳 47</strong>：依本局評定委員資格認定規範設定。</span></span>。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">基本資料維護作業</span> → <span class="btn-badge">承辦人基本資料維護作業</span>，輸入該人員員工編號。</li>
+        <li>點選 <span class="btn-badge">挑選</span>。</li>
+        <li>將評定委員單選按鈕設定為 <span class="btn-badge">是</span>。</li>
+        <li>點選 <span class="btn-badge">存檔</span>。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-3-4">
+      <span class="tag">人員異動 04</span>
+      <h3>四、核准核駁代三層決行</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>新案審查人員任職達特定條件後，核准、核駁公文得授權由其自行代三層決行發文。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>點選 <span class="btn-badge">線上審查管理</span> → <span class="btn-badge">管理及維護</span> → <span class="btn-badge">人員角色設定</span>，輸入該人員員工編號。</li>
+        <li>勾選「核駁授權四層決行人員」或「團體/證明核駁授權四層決行人員」等對應核取方塊。</li>
+        <li>點選 <span class="btn-badge">存檔</span>。</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 分頁四：肆、其他系統設定 -->
+  <div class="tab-panel" id="tab-4">
+    <h2 class="section-title">肆、其他系統設定</h2>
+
+    <div class="rule-card" id="sec-4-1">
+      <span class="tag">系統設定 01</span>
+      <h3>一、地址簿資料維護作業</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ol class="step-list">
+        <li>1. 用於永久性新增或調整人名ID內容使用。</li>
+        <li>2. 若為一次性、短期性之變動，則請承辦人於製稿時調整。<span class="footnote-ref">[48]<span class="popover"><strong>註腳 48</strong>：永久變動方寫入地址簿資料庫，短期委任變更僅於稿面上修正即可。</span></span></li>
+        <li>3. 此作業僅對地址簿修正，若需要將該人名ID所屬之所有檔案一併調整，應參考「地址簿資料批次更新」。</li>
+      </ol>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>1. 點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">基本資料維護作業</span> → <span class="btn-badge">地址簿資料維護作業</span>。</li>
+        <li>2. 新增或調整作業：
+          <ul>
+            <li><strong>(1) 新增：</strong><br>
+              A. 若有ID者，直接輸入所有欄位後，點選 <span class="btn-badge">存檔</span>。<br>
+              B. 若無ID者，先輸入其餘欄位，完成後點選 <span class="btn-badge">新增取號</span> 產生流水號ID後，再點選 <span class="btn-badge">存檔</span>。
+            </li>
+            <li><strong>(2) 調整：</strong><br>
+              點選 <span class="btn-badge">挑選</span> 找出欲修正之人名ID，調整完畢後點選 <span class="btn-badge">存檔</span>。
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-4-2">
+      <span class="tag">系統設定 02</span>
+      <h3>二、非全體商標權人之代理人</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>共有商標之商標權人，可能個別委任不同代理人之情況。</li>
+        <li>為讓外界知曉商標權人與代理人關係，需於公報、註冊簿上註記<span class="footnote-ref">[49]<span class="popover"><strong>註腳 49</strong>：明確標示代理人係受哪一位共有商標權人單獨委任。</span></span>。</li>
+        <li>並無絕對固定之寫法，但應盡量保持一致。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ul>
+        <li><strong>調整註冊簿資料：</strong>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">註冊簿異動事項資料維護作業</span>，輸入商標種類與註冊號；調整該筆異動事項內容（例如：代理人變更為：共有商標權人○○○委任○○○為代理人，共有商標權人○○○未委任代理人）。</li>
+        <li><strong>調整公報資料：</strong>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">文案資料維護</span> → <span class="btn-badge">商標公報雜項資料維護作業</span>，輸入文號或註冊號；點選資料中代理人之項次，於代理人中文名稱後方加註說明文字（例如：○○○（商標權人○○○之代理人））。</li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-4-3">
+      <span class="tag">系統設定 03</span>
+      <h3>三、文稿樣式設定</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>調整函稿適用之案由、審查結果，或調整函稿之內文。</li>
+      </ul>
+
+      <!-- HTML/CSS 手繪還原圖示 公文是否顯示於S282之規則.png -->
+      <div class="ui-mockup">
+        <div class="ui-browser-bar">🌐 系統介面模擬圖 (原圖 公文是否顯示於S282之規則.png)</div>
+        <div style="background:#0284c7; color:white; padding:6px 12px; font-weight:bold; border-radius:4px; margin-bottom:12px;">
+          文稿樣式設定作業
+        </div>
+        <div class="ui-row">
+          <span>*樣式代號：<input type="text" class="ui-input" value="議011" readonly style="width:100px;"></span>
+          <span>*樣式說明：<input type="text" class="ui-input" value="程式未補正不受理函稿" readonly style="width:180px;"></span>
+        </div>
+        <div style="border:2px dashed #ef4444; background:#fef2f2; padding:10px; border-radius:6px; margin-top:8px;">
+          <span style="color:#dc2626; font-weight:bold;">紅圈處標示處分書與S282顯示設定：</span><br>
+          <span>處分書種類：<input type="text" class="ui-input" value="無" readonly style="width:80px;"></span>
+          <span style="margin-left:12px;">*公開於282：<input type="text" class="ui-input highlight-red" value="否" readonly style="width:80px; font-weight:bold;"></span>
+        </div>
+      </div>
+
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>點選 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">基本資料維護作業</span> → <span class="btn-badge">文稿樣式設定作業</span>。</li>
+        <li>通過挑選樣式、案由找出欲調整之函稿，點選樣式代號進入調整功能介面。</li>
+        <li><strong>維護審查結果：</strong>需由維護頁籤中，點選下方新增案由，或已存在案由右方之設定案由，將案由帶入審查結果頁籤；設定商品類別、文案類別與審查結果。</li>
+        <li><strong>內文維護：</strong>直接點選內文維護頁籤，可維護函稿內文。特定區塊設定無法通過此作業調整（例如：主旨、說明）。參數、項次需依照固定寫法，系統將依照關鍵字自行判斷（例如：★｛申請案號｝）。</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 分頁五：伍、定期辦理業務 -->
+  <div class="tab-panel" id="tab-5">
+    <h2 class="section-title">伍、定期辦理業務</h2>
+
+    <div class="rule-card" id="sec-5-1">
+      <span class="tag">定期業務 01</span>
+      <h3>一、每月新申請案線上審查領案進度表</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>每月月初統計前1個月新申請案相關進度。</li>
+        <li>係長官追蹤每月辦理狀況用，完成後將檔案以pdf格式寄給全組。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li><strong>辦結類別數<span class="footnote-ref">[50]<span class="popover"><strong>註腳 50</strong>： 以商品類別加總件數為計算基準。 </span></span>：</strong>點選 <span class="btn-badge">統計分析</span> → <span class="btn-badge">承辦人查詢統計表﹝績效﹞</span> → <span class="btn-badge">承辦人新申請案商品類別每日辦結件數月報表</span>，輸入統計年月；點選列印或匯出Excel；於文件最末端找到 <strong>合計加總</strong> 數值→即本月 <strong>辦結類別數</strong>。</li>
+        <li><strong>首通時間：</strong>點選 <span class="btn-badge">統計分析</span> → <span class="btn-badge">其他﹝統計﹞</span> → <span class="btn-badge">新申請註冊案平均辦結日數統計表</span>，輸入統計期間；點選列印或匯出Excel；於 <strong>新申請註冊案平均辦結日數統計表(二)</strong> 中，找到 <strong>第一次發文平均月數（４）</strong> →即本月 <strong>首通全部</strong>；非 <strong>快軌案平均辦結日數統計表(六)</strong> 中，找到 <strong>第一次發文平均月數（４）</strong> →即本月 <strong>首通非快軌</strong>；於 <strong>快軌案平均辦結日數統計表(四)</strong> 中，找到 <strong>第一次發文平均月數（４）</strong> →即本月 <strong>首通快軌</strong>。</li>
+        <li><strong>未辦結案件數量：</strong>點選 <span class="btn-badge">資料查詢</span> → <span class="btn-badge">未辦結查詢作業</span>，輸入收文日期；點選案由選取，挑選新申請；點選查詢未辦結案件→即各年度 <strong>未辦結案件數</strong>。</li>
+        <li><strong>年度目標達成率：</strong>年度總目標係每年工作計畫訂定，年初時須檢視新一年度的目標數。累加本年度個月辦結類別數，計算 <strong>年度目標達成率</strong>。</li>
+        <li><strong>各科領案日期：</strong>點選 <span class="btn-badge">資料查詢</span> → <span class="btn-badge">未辦結查詢作業</span>，輸入收文日期約在前次紀錄時間+1個月，再推算其前後半個月；快軌案領案日期直接以非快軌案領案日期減2個月即可。</li>
+        <li><strong>各科領案數量：</strong>點選 <span class="btn-badge">線上審查管理</span> → <span class="btn-badge">資料查詢</span> → <span class="btn-badge">領案查詢作業</span>，選擇科別，輸入領案日期，並勾選全部／快軌案／非快軌案，點選 <span class="btn-badge">查詢</span>。</li>
+        <li><strong>各科待領新案未辦結：</strong>於 <strong>E網通</strong> 點選數位儀表板→商標行政區塊中的視按鈕→新申請案→未辦結件數。表格中 <strong>未辦結數</strong> 及 <strong>總計</strong> 2欄位需自行計算。</li>
+        <li><strong>最後取號狀況與前一年同期比較：</strong>點選 <span class="btn-badge">資料查詢</span> → <span class="btn-badge">綜合查詢作業</span>，輸入收文日期；點選案由選取，選擇 <span class="btn-badge">A 新申請</span>；點選查詢，查看本年度該月份最後一申請案號；再以前一年度同申請案號查詢收文日期。</li>
+        <li><strong>加速審查統計：</strong>點選 <span class="btn-badge">資料查詢</span> → <span class="btn-badge">綜合查詢作業</span>，輸入收文日期；點選案由選取，選擇 <span class="btn-badge">FS 新申請案加速審查</span>；點選查詢，即可看到指定期間之加速審查收件數，並向回確認前幾個月的數量是否有所調整。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-5-2">
+      <span class="tag">定期業務 02</span>
+      <h3>二、每月統計前置</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>秘書室每月統整前一個月之各項統計資料，並回報經濟部。</li>
+        <li>考量郵寄、自服務處轉寄回本局、收文、掃描、建檔等各項步驟，約每月5至10日可以作業<span class="footnote-ref">[51]<span class="popover"><strong>註腳 51</strong>：需等待前一月份所有送件與歸檔資料完成轉檔。</span></span>，實際時間視收文狀況而定。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>點選 <span class="btn-badge">公文查詢</span> → <span class="btn-badge">收文查詢</span> → <span class="btn-badge">收文稽催查詢作業</span>，勾選無承辦人查詢，並輸入收文日期，檢視是否仍有收文尚無分承辦人。</li>
+        <li>點選 <span class="btn-badge">統計分析</span> → <span class="btn-badge">統計批次作業</span> → <span class="btn-badge">統計前置檢查作業</span>，輸入統計年月，並勾選文檔／案檔，檢視是否有不合理資料（其中以 <strong>020線上變更</strong> 之案件承辦人為 <strong>sys</strong> ，此種承辦人無群組不需理會）。</li>
+        <li>自S281點選 <span class="btn-badge">資料查詢</span> → <span class="btn-badge">特殊商標查詢</span>，輸入申請日期，分別檢視各樣態特殊商標資料是否有誤。</li>
+      </ol>
+    </div>
+
+    <div class="rule-card" id="sec-5-3">
+      <span class="tag">定期業務 03</span>
+      <h3>三、e-mail通知未繳註冊費</h3>
+      <p><strong>(一) 情境與說明</strong></p>
+      <ul>
+        <li>依《商標法》第32條第2項規定：經核准審定之商標，申請人應於審定書送達後二個月內，繳納註冊費後，始予註冊公告，並發給商標註冊證；屆期未繳費者，不予註冊公告。</li>
+        <li>本局於繳費期限即將屆期前（約提前3至5個工作日），以e-mail通知。</li>
+      </ul>
+      <p><strong>(二) 作業方式</strong></p>
+      <ol class="step-list">
+        <li>點選 <span class="btn-badge">商標權管理</span> → <span class="btn-badge">第一期註冊費管理作業</span> → <span class="btn-badge">e-mail通知未繳註冊費申請案號查詢作業</span>，輸入全期註冊費繳費期限。</li>
+        <li>點選 <span class="btn-badge">查詢</span>。</li>
+        <li>複製清單中之申請案號，至 <span class="btn-badge">公文查詢</span> → <span class="btn-badge">收文查詢</span> → <span class="btn-badge">收文資料查詢</span>，檢視該案件收文狀況，若有退文尚未改寄、或已有新繳納註冊費來文者，不列入寄送e-mail清單。</li>
+        <li>全數清查收文狀況後，點選 <span class="btn-badge">整批寄送e-mail</span>。</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 分頁六：陸、系統相關規則說明 -->
+  <div class="tab-panel" id="tab-6">
+    <h2 class="section-title">陸、系統相關規則說明</h2>
+
+    <div class="rule-card" id="sec-6-1">
+      <span class="tag">系統規則 01</span>
+      <h3>一、S170產製之虛擬帳號</h3>
+      <p>S170僅產製2類、3組虛擬帳號：</p>
+      <ul>
+        <li><strong>繳納註冊費虛擬帳號：</strong>帳號開頭為89877、89878（現已停用）。</li>
+        <li><strong>通知補繳規費虛擬帳號：</strong>帳號開頭為89879。</li>
+        <li>其餘各類申請規費、考試規費等虛擬帳號，則由S04*產製。</li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-6-2">
+      <span class="tag">系統規則 02</span>
+      <h3>二、收據字軌</h3>
+      <p>本局開立之收據，會依繳費方式、平台不同，使用不同字軌：</p>
+      <ul>
+        <li><strong>AT：</strong>指定案件約定帳號扣款</li>
+        <li><strong>BT：</strong>郵局劃撥</li>
+        <li><strong>DT：</strong>線上申請直接採約定帳號扣款</li>
+        <li><strong>ET：</strong>各類電子繳費方式</li>
+        <li><strong>FT：</strong>信用卡繳費</li>
+        <li><strong>TT：</strong>臨櫃繳費</li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-6-3">
+      <span class="tag">系統規則 03</span>
+      <h3>三、快軌案判定規則</h3>
+      <ul>
+        <li><strong>電子申請：</strong>必須使用電子申請系統送件。</li>
+        <li><strong>平面商標：</strong>不包含立體、聲音、氣味等非傳統商標，也不適用證明標章或團體標章。</li>
+        <li><strong>線上繳費：
+        <ul>
+          <li><strong>規定：</strong>須透過電子申請系統完成繳納申請規費。</li>
+          <li><strong>實務：</strong>判定時間為申請後30天，在判定前完成繳納均視為快軌案。</li>
+        </ul>
+        指定商品/服務名稱：</strong>所指定的商品或服務名稱必須與「智財局電子申請系統參考名稱」完全相同，不能自創名稱。實務：以S170是否成功撞碼為依據，即便申請的商品名稱不屬於該類別，依然可以撞碼成功<span class="footnote-ref">[52]<span class="popover"><strong>註腳 52</strong>：只要系統能成功比對標準電子代碼，即使類別置放錯誤亦視為快軌案。</span></span>（例如：申請人將編碼450510003的「潛水衣租賃」寫在第41類，因系統仍可撞碼成功，僅是類別不正確，仍會被判定為快軌案）。</li>
+        <li><strong>代理人委任：</strong>若委託代理人，委任狀須於申請日後 20 日內送達智財局。實務：系統僅為形式判斷，於申請後30天的判定日時，有附上名為委任狀之檔案即可。</li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-6-4">
+      <span class="tag">系統規則 04</span>
+      <h3>四、公文是否顯示於S282之規則</h3>
+      <p><strong>決定是否顯示關鍵欄位：</strong></p>
+      <ul>
+        <li><strong>處分書種類：</strong>決定公文性質（如核駁審定書、異議審定書等）。</li>
+        <li><strong>公開於282：</strong>直接控制該公文是否於外部遠端檢索系統（S282）中呈現。</li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-6-5">
+      <span class="tag">系統規則 05</span>
+      <h3>五、加速審查不受理相關規則</h3>
+      <p>申請加速審查案件，若不符法定要件經本局通知限期補正，屆期未補正者，依法處分不受理。</p>
+    </div>
+
+    <div class="rule-card" id="sec-6-6">
+      <span class="tag">系統規則 06</span>
+      <h3>六、繳納註冊費後，註冊號及公報批次作業時程</h3>
+      <p>申請人完成第一期或全期註冊費繳納後，系統會於特定批次時程執行註冊號編排、資料寫入41檔及排入公報程序。</p>
+    </div>
+
+    <div class="rule-card" id="sec-6-7">
+      <span class="tag">系統規則 07</span>
+      <h3>七、已註冊商標之文案、註冊簿與公報資料傳遞</h3>
+      <p>公報之資料，不依文案辦結為啟動時機，以 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">註冊簿異動事項資料維護作業</span> 功能加入異動，亦可在公報批次作業時將該筆異動資料納入公報。</p>
+    </div>
+
+    <div class="rule-card" id="sec-6-8">
+      <span class="tag">系統規則 08</span>
+      <h3>八、41檔中的撤銷條款代號意義</h3>
+      <p>41檔中的撤銷條款均以代號方式呈現。實際對應意義應查看撤銷條款資料，點擊 <span class="btn-badge">檔案維護</span> → <span class="btn-badge">基本資料維護作業</span> → <span class="btn-badge">撤銷條款資料維護作業</span>，可檢視所有代碼所代表之意義。</p>
+    </div>
+
+    <div class="rule-card" id="sec-6-9">
+      <span class="tag">系統規則 09</span>
+      <h3>九、新舊版瀏覽文件適用時機</h3>
+      <p>新版瀏覽文件於111年8月26日上線，適用時機係以母案領案日為準：</p>
+      <ul>
+        <li>母案於該111年8月25日前領案者，連同後續來文均採舊版瀏覽文件。</li>
+        <li>母案於該111年8月26日後領案者，連同後續來文均採新版瀏覽文件。</li>
+        <li>新版瀏覽文件上線時，僅 <span class="btn-badge">A 新申請</span> 採用線上審查，故僅 <span class="btn-badge">A 新申請</span> 案由存在新舊版瀏覽文件並存之情形。</li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-6-10">
+      <span class="tag">系統規則 10</span>
+      <h3>十、核准審定書退文處理方式</h3>
+      <ul>
+        <li><strong>尚未註冊：</strong>辦理結果選擇「退文改寄」。「退文改寄」除改寄該退文外，同時會重新產製繳費單，並更新繳費期限。</li>
+        <li><strong>已註冊：</strong>辦理結果選擇「改寄」。因該案已經註冊繳費，無重新產製繳費單之需求，若選擇「退文改寄」，則會彈出視窗顯示錯誤訊息：「此案未符合改寄延長第一期註冊費繳納期限條件!!」。</li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-6-11">
+      <span class="tag">系統規則 11</span>
+      <h3>十一、商標種類編號規則</h3>
+      <p>共分為5大類，其中二個大類再細分3小類：</p>
+      <ul>
+        <li><strong>T：商標</strong>（細分為：1商標、2聯合商標、3防護商標）</li>
+        <li><strong>S：服務標章</strong>（細分為：4服務標章、5聯合服務標章、6防護服務標章）</li>
+        <li><strong>7：證明標章</strong></li>
+        <li><strong>8：團體標章</strong></li>
+        <li><strong>G：團體商標</strong></li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-6-12">
+      <span class="tag">系統規則 12</span>
+      <h3>十二、檔卷編號規則</h3>
+      <ul>
+        <li><strong>線上審查：</strong>尚未審結時已製卷歸檔，此時僅有申請案號無審定號，改以「K+申請案號」規則製卷（K：新申請案卷）。</li>
+        <li><strong>紙本審查：</strong>紙本由審查官持有，審結時一併歸檔，歸檔時已有審定號，採用「商標種類號+審定號」規則製卷（C：證標核准卷、CC：證標核駁卷、G：團標核准卷、GG：團標核駁卷、S：服標核准卷、SS：服標核駁卷、T：商標核准卷、TT：商標核駁卷等）。</li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-6-13">
+      <span class="tag">系統規則 13</span>
+      <h3>十三、商品分割規則</h3>
+      <p>審查及註冊後分割案件，商品與類別劃分需依照法定分割規範處理。</p>
+    </div>
+
+    <div class="rule-card" id="sec-6-14">
+      <span class="tag">系統規則 14</span>
+      <h3>十四、「到期消滅」與「放棄延展」之差異</h3>
+      <p>於S281中，檢出結果之無效／撤銷原因欄位中包含多種值，其中 <strong>到期消滅</strong> 與 <strong>放棄延展</strong> 依現行法規邏輯並無差異，此為過去修法所致。</p>
+      <p><strong>(一) 到期消滅：</strong>現今商標若未申請延展／延展未核准，S170將於專用期限到期後1年<span class="footnote-ref">[53]<span class="popover"><strong>註腳 53</strong>：原規則為2年，自114年1月1日起調整為1年</span></span>，批次於41檔撤銷原因欄位改為 <strong>到期消滅</strong>。</p>
+      <p><strong>(二) 放棄延展：</strong>《商標法》92年4月29日修正施行前，舊法規定包含 正商標 、 聯合商標 及 防護商標 ，其中 聯合商標 需在 正商標 申請延展時才得一併申請延展，無法單獨申請延展。舊法規定延展需審查使用證據，若未使用 正商標 但有使用 聯合商標 ，會使 正商標 無法延展，亦導致 聯合商標 無法一併申請延展，此時商標權人可採以下方式辦理，其中採用方式(2)者，原 正商標 之撤銷原因註記為 放棄延展 ：</p>
+      <ul>
+        <li>(1) 將原 正商標 轉為 聯合商標 、原 聯合商標 轉為 正商標 後一併申請延展。</li>
+        <li>(2) 放棄延展原正商標，並將原聯合商標轉為正商標後申請延展。</li>
+      </ul>
+    </div>
+
+    <div class="rule-card" id="sec-6-15">
+      <span class="tag">系統規則 15</span>
+      <h3>十五、「向訴願會答辯」與「向法院答辯」差異</h3>
+      <ul>
+        <li><strong>「向訴願會答辯」：</strong>答辯內容直接寫於 <strong>公文函</strong> 內。</li>
+        <li><strong>「向法院答辯」：</strong>答辯內容另外寫於 <strong>答辯狀</strong> 中。僅特定案由的部分函稿樣式中包含 <strong>答辯狀</strong> ，必須選此類案由，承辦人才可書寫 <strong>答辯狀</strong> 回復。法院有時未正式發文通知補充答辯，解決方式：假收文，並選擇包含 <strong>答辯狀</strong> 之案由；或解開已有包含答辯狀案由來文之21檔，以同一收文再次製稿發文<span class="footnote-ref">[54]<span class="popover"><strong>註腳 54</strong>：若法官庭上口頭指示補充答辯，可採假收文或解開已結案21檔重新發稿。</span></span>。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 分頁七：柒、專有名詞列表 -->
+  <div class="tab-panel" id="tab-7">
+    <h2 class="section-title">柒、專有名詞列表</h2>
+
+    <div class="rule-card" id="sec-7-1">
+      <span class="tag">系統對照 01</span>
+      <h3>系統名稱類</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>系統代號</th><th>系統全稱與說明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>S010</strong></td><td>目錄服務系統</td></tr>
+          <tr><td><strong>S020</strong></td><td>申請人／代理人登錄管理系統</td></tr>
+          <tr><td><strong>S04*</strong></td><td>線上申請系統群</td></tr>
+          <tr><td><strong>S040</strong></td><td>申請案件編輯系統（一般民眾使用為主，於網頁中操作線上申請）</td></tr>
+          <tr><td><strong>S045</strong></td><td>新版申請案件編輯系統（代理人使用為主，需下載安裝本機端程式操作，編輯完成後送出）</td></tr>
+          <tr><td><strong>S061</strong></td><td>新紙本收件系統</td></tr>
+          <tr><td><strong>S080</strong></td><td>規費管理系統</td></tr>
+          <tr><td><strong>S09*</strong></td><td>文件庫相關系統群</td></tr>
+          <tr><td><strong>S091</strong></td><td>電子文件管理系統</td></tr>
+          <tr><td><strong>S092</strong></td><td>申請案件調閱系統</td></tr>
+          <tr><td><strong>S093</strong></td><td>電子檔卷調閱系統</td></tr>
+          <tr><td><strong>S170</strong></td><td>商標行政檔案管理系統</td></tr>
+          <tr><td><strong>EDOC</strong></td><td>瀏覽文件（審查時用以瀏覽 09* 資料，並可編輯、上傳參考資料之介面）</td></tr>
+          <tr><td><strong>S220</strong></td><td>公報發行系統</td></tr>
+          <tr><td><strong>S28*</strong></td><td>商標檢索系統群</td></tr>
+          <tr><td><strong>S281</strong></td><td>商標檢索系統（內部使用之檢索系統）</td></tr>
+          <tr><td><strong>S282</strong></td><td>商標遠端檢索系統（外部使用之檢索系統，有較嚴格之顯示筆數限制）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rule-card" id="sec-7-2">
+      <span class="tag">系統對照 02</span>
+      <h3>資料庫名詞類</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>檔名代碼</th><th>簡稱與全稱說明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>21檔</strong></td><td>收文資料檔（習慣簡稱 <strong>文檔</strong>）</td></tr>
+          <tr><td><strong>41檔</strong></td><td>商標權資料檔（習慣簡稱 <strong>權檔</strong>）</td></tr>
+          <tr><td><strong>71檔</strong></td><td>新申請案資料檔（習慣簡稱 <strong>案檔</strong>）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 分頁八：捌、文件資訊與編修紀錄 -->
+  <div class="tab-panel" id="tab-8">
+    <h2 class="section-title">捌、文件資訊與編修紀錄</h2>
+
+    <div class="rule-card" id="sec-8-1">
+      <span class="tag">原始文件資訊</span>
+      <h3>原始文件基本資訊</h3>
+      <table class="data-table">
+        <tbody>
+          <tr><th style="width:200px;">原作者／文號代碼</th><td>21015曾沛恩</td></tr>
+          <tr><th>原文件日期</th><td>2026/6/22</td></tr>
+          <tr><th>發布單位</th><td>經濟部智慧財產局</td></tr>
+          <tr><th>系統專案名稱</th><td>S170商標行政系統 常見錯誤修正指引與問題系統規則說明</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rule-card" id="sec-8-2">
+      <span class="tag">內容異動紀錄</span>
+      <h3>內容編修紀錄 (依原文件內容呈現)</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:80px;">序號</th>
+            <th style="width:140px;">編修日期</th>
+            <th style="width:120px;">編修者</th>
+            <th>編修重點</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>113.07.28</td>
+            <td>曾沛恩</td>
+            <td>初版</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>115.04.17</td>
+            <td>曾沛恩</td>
+            <td>依主題重新排版、排序</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 切換分頁控制腳本 Tab Switch Function
+  function switchTab(tabId) {
+    const panels = document.querySelectorAll('.tab-panel');
+    panels.forEach(panel => panel.classList.remove('active'));
+
+    const btns = document.querySelectorAll('.tab-btn');
+    btns.forEach(btn => btn.classList.remove('active'));
+
+    const targetPanel = document.getElementById(tabId);
+    if (targetPanel) {
+      targetPanel.classList.add('active');
+    }
+
+    const targetBtn = document.getElementById('btn-' + tabId);
+    if (targetBtn) {
+      targetBtn.classList.add('active');
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // 切換分頁並滾動至指定 ID 元素
+  function switchTabAndScroll(tabId, elementId) {
+    switchTab(tabId);
+    setTimeout(() => {
+      const elem = document.getElementById(elementId);
+      if (elem) {
+        elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  }
+</script>
+
+</body>
+</html>

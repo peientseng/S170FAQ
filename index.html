@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S170商標行政系統常見錯誤修正指引與系統規則 (v2.7)</title>
+  <title>S170商標行政系統常見錯誤修正指引與系統規則 (v3.4)</title>
   <author>21015曾沛恩</author>
   <style>
     :root {
@@ -668,10 +668,13 @@ function copySnippet(btn, text) {
       </details>
     </li>
     <li>
-      <a onclick="switchTab('tab-7')" class="toc-single-link">柒、專有名詞列表</a>
+      <a onclick="switchTab('tab-7')" class="toc-single-link">柒、商標案號與其規則對照表</a>
     </li>
     <li>
-      <a onclick="switchTab('tab-8')" class="toc-single-link">捌、文件資訊與編修紀錄</a>
+      <a onclick="switchTab('tab-8')" class="toc-single-link">捌、專有名詞列表</a>
+    </li>
+    <li>
+      <a onclick="switchTab('tab-9')" class="toc-single-link">玖、文件資訊與編修紀錄</a>
     </li>
   </ul>
 </nav>
@@ -680,7 +683,7 @@ function copySnippet(btn, text) {
 <div class="main-wrapper">
   <header>
     <h1>經濟部智慧財產局｜S170商標行政系統</h1>
-    <p>常見錯誤修正指引與問題系統規則說明 (v2.7)</p>
+    <p>常見錯誤修正指引與問題系統規則說明 (v3.4)</p>
   </header>
 
   <!-- 頂部 Tab 頁籤列 Navigation -->
@@ -692,8 +695,9 @@ function copySnippet(btn, text) {
     <button class="tab-btn" id="btn-tab-4" onclick="switchTab('tab-4')">肆、其他系統設定</button>
     <button class="tab-btn" id="btn-tab-5" onclick="switchTab('tab-5')">伍、定期辦理業務</button>
     <button class="tab-btn" id="btn-tab-6" onclick="switchTab('tab-6')">陸、系統規則說明</button>
-    <button class="tab-btn" id="btn-tab-7" onclick="switchTab('tab-7')">柒、專有名詞列表</button>
-    <button class="tab-btn" id="btn-tab-8" onclick="switchTab('tab-8')">捌、文件資訊紀錄</button>
+    <button class="tab-btn" id="btn-tab-7" onclick="switchTab('tab-7')">柒、商標案號對照表</button>
+    <button class="tab-btn" id="btn-tab-8" onclick="switchTab('tab-8')">捌、專有名詞列表</button>
+    <button class="tab-btn" id="btn-tab-9" onclick="switchTab('tab-9')">玖、文件資訊紀錄</button>
   </div>
 
   <!-- 分頁一：壹、繳費與收據相關作業 -->
@@ -774,25 +778,36 @@ function copySnippet(btn, text) {
       </div>
 
       <!-- Card 7 -->
+      <div class="rule-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#0891b2;">
+        <div>
+          <h4 style="margin:4px 0 8px 0; color:#0e7490; font-size:1.1rem;">柒、商標案號與其規則對照表</h4>
+          <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin-bottom:12px;">
+            收錄自項次 1 至項次 195 之完整案號代碼、代碼中文內容、對應收文案號種類及來文身分對照表。
+          </p>
+        </div>
+        <button onclick="switchTab('tab-7')" class="ui-btn" style="background:#0891b2; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
+      </div>
+
+      <!-- Card 8 -->
       <div class="rule-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#475569;">
         <div>
-          <h4 style="margin:4px 0 8px 0; color:#334155; font-size:1.1rem;">柒、專有名詞列表</h4>
+          <h4 style="margin:4px 0 8px 0; color:#334155; font-size:1.1rem;">捌、專有名詞列表</h4>
           <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin-bottom:12px;">
             跨系統名稱（S170/S091/EDOC）代號對照表及處分結案狀態碼意義對照。
           </p>
         </div>
-        <button onclick="switchTab('tab-7')" class="ui-btn" style="background:#475569; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
+        <button onclick="switchTab('tab-8')" class="ui-btn" style="background:#475569; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
       </div>
 
-      <!-- Card 8 -->
+      <!-- Card 9 -->
       <div class="rule-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#64748b;">
         <div>
-          <h4 style="margin:4px 0 8px 0; color:#475569; font-size:1.1rem;">捌、文件編修紀錄</h4>
+          <h4 style="margin:4px 0 8px 0; color:#475569; font-size:1.1rem;">玖、文件編修紀錄</h4>
           <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin-bottom:12px;">
             記錄本手冊文件之歷史編修歷程與版本發布紀錄。
           </p>
         </div>
-        <button onclick="switchTab('tab-8')" class="ui-btn" style="background:#64748b; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
+        <button onclick="switchTab('tab-9')" class="ui-btn" style="background:#64748b; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
       </div>
     </div>
   </div>
@@ -1866,9 +1881,237 @@ function copySnippet(btn, text) {
     </div>
   </div>
 
-  <!-- 分頁七：柒、專有名詞列表 -->
+  <!-- 分頁七：柒、商標案號與其規則對照表 -->
   <div class="tab-panel" id="tab-7">
-    <h2 class="section-title">柒、專有名詞列表</h2>
+    <h2 class="section-title">柒、商標案號與其規則對照表</h2>
+
+    <div class="rule-card" id="sec-7-1">
+      <h3>商標案號與其規則對照表</h3>
+      <p><strong>【情境與說明】</strong>以下為 S170 商標行政系統各類案號代碼、案由中文內容、對應之收文案號種類及來文身分完整對照表：</p>
+
+      <!-- 搜尋篩選輸入框 -->
+      <div style="margin: 16px 0; display: flex; align-items: center; gap: 12px; background: #f1f5f9; padding: 12px 16px; border-radius: 8px; border: 1px solid #cbd5e1;">
+        <label for="code-search-input" style="font-weight: bold; color: #1e40af; display: flex; align-items: center; gap: 6px; white-space: nowrap; font-size: 0.95rem;">
+          🔍 搜尋代碼或代碼中文內容：
+        </label>
+        <input type="text" id="code-search-input" placeholder="請輸入關鍵字或代碼（例如：9、91、廢止、註冊...）" oninput="filterCodeTable()" style="flex: 1; padding: 8px 12px; border: 1px solid #94a3b8; border-radius: 6px; font-size: 0.95rem; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#2563eb';" onblur="this.style.borderColor='#94a3b8';">
+        <button onclick="document.getElementById('code-search-input').value=''; filterCodeTable();" class="ui-btn" style="padding: 8px 16px; background: #64748b; color: white; border: none; font-weight: bold; border-radius: 6px; cursor: pointer;">清除</button>
+      </div>
+      <table class="data-table" id="code-mapping-table">
+        <thead>
+          <tr>
+            <th style="width:60px;">項次</th>
+            <th style="width:80px;">代碼</th>
+            <th>代碼中文內容</th>
+            <th style="width:120px;">收文案號</th>
+            <th style="width:120px;">來文身分</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="no-result-row" style="display:none;"><td colspan="5" style="text-align:center; padding:24px; color:#dc2626; font-weight:bold; font-size:1.05rem; background:#fff5f5;">⚠️ 無符合「<span id="search-keyword-display"></span>」之結果</td></tr>
+          <tr><td>1</td><td><strong>9</strong></td><td>廢止</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>2</td><td><strong>91</strong></td><td>廢止訴願</td><td>爭議號</td><td>訴願人</td></tr>
+          <tr><td>3</td><td><strong>92</strong></td><td>廢止訴調</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>4</td><td><strong>93</strong></td><td>廢止再調</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>5</td><td><strong>94</strong></td><td>廢止行訟</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>6</td><td><strong>95</strong></td><td>廢止再審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>7</td><td><strong>96</strong></td><td>廢止訴補</td><td>爭議號</td><td>訴願人</td></tr>
+          <tr><td>8</td><td><strong>9C</strong></td><td>廢止補充答辯</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>9</td><td><strong>9D</strong></td><td>廢止第一審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>10</td><td><strong>9E</strong></td><td>廢止上訴審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>11</td><td><strong>9R</strong></td><td>廢止撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>12</td><td><strong>9T</strong></td><td>廢止催檢卷答辯通知</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>13</td><td><strong>A</strong></td><td>新申請</td><td>申請號</td><td>申請人</td></tr>
+          <tr><td>14</td><td><strong>A1</strong></td><td>核駁訴願</td><td>核駁號</td><td>訴願人</td></tr>
+          <tr><td>15</td><td><strong>A2</strong></td><td>核駁訴調</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>16</td><td><strong>A3</strong></td><td>核駁再調</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>17</td><td><strong>A4</strong></td><td>核駁行訟</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>18</td><td><strong>A5</strong></td><td>核駁再審</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>19</td><td><strong>A6</strong></td><td>核駁訴補</td><td>核駁號</td><td>訴願人</td></tr>
+          <tr><td>20</td><td><strong>AA</strong></td><td>註冊前變更</td><td>申請號</td><td>申請人</td></tr>
+          <tr><td>21</td><td><strong>AA1</strong></td><td>註冊前線上變更</td><td>申請號</td><td>申請人</td></tr>
+          <tr><td>22</td><td><strong>AAR</strong></td><td>復權</td><td>申請號</td><td>申請人</td></tr>
+          <tr><td>23</td><td><strong>AB</strong></td><td>註冊前分割</td><td>申請號</td><td>申請人</td></tr>
+          <tr><td>24</td><td><strong>AC</strong></td><td>核駁補充答辯</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>25</td><td><strong>AD</strong></td><td>核駁第一審</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>26</td><td><strong>AE</strong></td><td>核駁上訴審</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>27</td><td><strong>AF</strong></td><td>核駁變更</td><td>申請號</td><td>申請人</td></tr>
+          <tr><td>28</td><td><strong>AT</strong></td><td>核駁催檢卷答辯通知</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>29</td><td><strong>AZ</strong></td><td>註冊前變更(一案多件)</td><td></td><td></td></tr>
+          <tr><td>30</td><td><strong>B</strong></td><td>註冊變更</td><td>審定號</td><td>註冊人</td></tr>
+          <tr><td>31</td><td><strong>B1</strong></td><td>商品減縮</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>32</td><td><strong>BA1</strong></td><td>註冊後線上變更</td><td></td><td>註冊人</td></tr>
+          <tr><td>33</td><td><strong>BA2</strong></td><td>代理人登錄備查或變更</td><td></td><td>申請人</td></tr>
+          <tr><td>34</td><td><strong>BA3</strong></td><td>在職訓練時數通報</td><td></td><td>申請人</td></tr>
+          <tr><td>35</td><td><strong>BB</strong></td><td>註冊後分割</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>36</td><td><strong>BC</strong></td><td>繳註冊費</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>37</td><td><strong>BR</strong></td><td>變更撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>38</td><td><strong>C</strong></td><td>審定變更</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>39</td><td><strong>C1</strong></td><td>審定/註冊後商標種類變更</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>40</td><td><strong>C2</strong></td><td>申請及註冊變更</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>41</td><td><strong>CR</strong></td><td>種類變更撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>42</td><td><strong>D</strong></td><td>延展</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>43</td><td><strong>DR</strong></td><td>延展撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>44</td><td><strong>E</strong></td><td>移轉</td><td>審定號</td><td>受讓人</td></tr>
+          <tr><td>45</td><td><strong>ER</strong></td><td>移轉撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>46</td><td><strong>F</strong></td><td>補發註冊證</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>47</td><td><strong>F1</strong></td><td>代理人登錄</td><td></td><td>申請人</td></tr>
+          <tr><td>48</td><td><strong>F2</strong></td><td>專門代理業務備查登錄</td><td></td><td>申請人</td></tr>
+          <tr><td>49</td><td><strong>F3</strong></td><td>代理人訓練時數</td><td></td><td>申請人</td></tr>
+          <tr><td>50</td><td><strong>F4</strong></td><td>註銷或停業屆期通知</td><td></td><td>申請人</td></tr>
+          <tr><td>51</td><td><strong>F5</strong></td><td>代理人處分</td><td></td><td>申請人</td></tr>
+          <tr><td>52</td><td><strong>FC</strong></td><td>申請商標註冊證副本</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>53</td><td><strong>FCR</strong></td><td>副本撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>54</td><td><strong>FR</strong></td><td>補證撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>55</td><td><strong>FS</strong></td><td>新申請案加速審查</td><td>申請號</td><td>申請人</td></tr>
+          <tr><td>56</td><td><strong>G</strong></td><td>異議</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>57</td><td><strong>G1</strong></td><td>異議訴願</td><td>爭議號</td><td>訴願人</td></tr>
+          <tr><td>58</td><td><strong>G2</strong></td><td>異議訴調</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>59</td><td><strong>G3</strong></td><td>異議再調</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>60</td><td><strong>G4</strong></td><td>異議行訟</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>61</td><td><strong>G5</strong></td><td>異議再審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>62</td><td><strong>G6</strong></td><td>異議訴補</td><td>爭議號</td><td>訴願人</td></tr>
+          <tr><td>63</td><td><strong>GC</strong></td><td>異議補充答辯</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>64</td><td><strong>GD</strong></td><td>異議第一審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>65</td><td><strong>GE</strong></td><td>異議上訴審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>66</td><td><strong>GR</strong></td><td>異議撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>67</td><td><strong>GT</strong></td><td>異議催檢卷答辯通知</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>68</td><td><strong>H</strong></td><td>評定</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>69</td><td><strong>H1</strong></td><td>評定訴願</td><td>爭議號</td><td>訴願人</td></tr>
+          <tr><td>70</td><td><strong>H2</strong></td><td>評定訴調</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>71</td><td><strong>H3</strong></td><td>評定再調</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>72</td><td><strong>H4</strong></td><td>評定行訟</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>73</td><td><strong>H5</strong></td><td>評定再審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>74</td><td><strong>H6</strong></td><td>評定訴補</td><td>爭議號</td><td>訴願人</td></tr>
+          <tr><td>75</td><td><strong>H7</strong></td><td>提評</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>76</td><td><strong>HC</strong></td><td>評定補充答辯</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>77</td><td><strong>HD</strong></td><td>評定第一審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>78</td><td><strong>HE</strong></td><td>評定上訴審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>79</td><td><strong>HR</strong></td><td>評定撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>80</td><td><strong>HT</strong></td><td>評定催檢卷答辯通知</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>81</td><td><strong>I</strong></td><td>設定質權</td><td>審定號</td><td>專用權人</td></tr>
+          <tr><td>82</td><td><strong>IA</strong></td><td>塗銷質權</td><td>審定號</td><td>專用權人</td></tr>
+          <tr><td>83</td><td><strong>IR</strong></td><td>質權撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>84</td><td><strong>J</strong></td><td>授權</td><td>審定號</td><td>專用權人</td></tr>
+          <tr><td>85</td><td><strong>J1</strong></td><td>授權</td><td>審定號</td><td>專用權人</td></tr>
+          <tr><td>86</td><td><strong>J2</strong></td><td>再授權</td><td>審定號</td><td>授權使用人</td></tr>
+          <tr><td>87</td><td><strong>JA</strong></td><td>終止授權</td><td>審定號</td><td>專用權人</td></tr>
+          <tr><td>88</td><td><strong>JB</strong></td><td>終止再授權</td><td>審定號</td><td>授權使用人</td></tr>
+          <tr><td>89</td><td><strong>JC</strong></td><td>撤銷授權</td><td>審定號</td><td>專用權人</td></tr>
+          <tr><td>90</td><td><strong>JD</strong></td><td>撤銷再授權</td><td>審定號</td><td>授權使用人</td></tr>
+          <tr><td>91</td><td><strong>JE</strong></td><td>廢止授權</td><td>審定號</td><td>專用權人</td></tr>
+          <tr><td>92</td><td><strong>JF</strong></td><td>廢止再授權</td><td>審定號</td><td>授權使用人</td></tr>
+          <tr><td>93</td><td><strong>JR</strong></td><td>授權／再授權撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>94</td><td><strong>K</strong></td><td>檢舉撤銷</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>95</td><td><strong>K1</strong></td><td>檢舉訴願</td><td>爭議號</td><td>訴願人</td></tr>
+          <tr><td>96</td><td><strong>K2</strong></td><td>檢舉訴調</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>97</td><td><strong>K3</strong></td><td>檢舉再調</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>98</td><td><strong>K4</strong></td><td>檢舉行訟</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>99</td><td><strong>K5</strong></td><td>檢舉再審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>100</td><td><strong>K6</strong></td><td>檢舉訴補</td><td>爭議號</td><td>訴願人</td></tr>
+          <tr><td>101</td><td><strong>L</strong></td><td>申請撤銷</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>102</td><td><strong>L1</strong></td><td>撤銷案訴願</td><td>爭議號</td><td>訴願人</td></tr>
+          <tr><td>103</td><td><strong>L2</strong></td><td>撤銷案訴調</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>104</td><td><strong>L3</strong></td><td>撤銷案再調</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>105</td><td><strong>L4</strong></td><td>撤銷案行訟</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>106</td><td><strong>L5</strong></td><td>撤銷案再審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>107</td><td><strong>L6</strong></td><td>撤銷案訴補</td><td>爭議號</td><td>訴願人</td></tr>
+          <tr><td>108</td><td><strong>LC</strong></td><td>撤銷補充答辯</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>109</td><td><strong>LD</strong></td><td>撤銷第一審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>110</td><td><strong>LE</strong></td><td>撤銷上訴審</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>111</td><td><strong>M</strong></td><td>英證</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>112</td><td><strong>MR</strong></td><td>英證撤回</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>113</td><td><strong>N</strong></td><td>閱卷</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>114</td><td><strong>N1</strong></td><td>影印</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>115</td><td><strong>N2</strong></td><td>經濟部行政訴訟調卷</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>116</td><td><strong>N3</strong></td><td>申請補發規費收據</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>117</td><td><strong>O</strong></td><td>參加評定</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>118</td><td><strong>P</strong></td><td>其他證明</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>119</td><td><strong>Q</strong></td><td>報請撤銷</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>120</td><td><strong>R1</strong></td><td>自請撤回</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>121</td><td><strong>R2</strong></td><td>審定自撤</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>122</td><td><strong>R3</strong></td><td>拋棄商標權</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>123</td><td><strong>R4</strong></td><td>退費</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>124</td><td><strong>R5</strong></td><td>註冊前變更撤回</td><td>申請號</td><td>申請人</td></tr>
+          <tr><td>125</td><td><strong>R6</strong></td><td>註冊前分割撤回</td><td>申請號</td><td>申請人</td></tr>
+          <tr><td>126</td><td><strong>R7</strong></td><td>商品減縮撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>127</td><td><strong>R8</strong></td><td>註冊後分割撤回</td><td>審定號</td><td>申請人</td></tr>
+          <tr><td>128</td><td><strong>R9</strong></td><td>廢止回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>129</td><td><strong>R92</strong></td><td>廢止訴願回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>130</td><td><strong>R95</strong></td><td>廢止再審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>131</td><td><strong>R9D</strong></td><td>廢止第一審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>132</td><td><strong>R9E</strong></td><td>廢止上訴審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>133</td><td><strong>RA</strong></td><td>核駁回局</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>134</td><td><strong>RA2</strong></td><td>核駁訴願回局</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>135</td><td><strong>RA5</strong></td><td>核駁再審回局</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>136</td><td><strong>RAD</strong></td><td>核駁第一審回局</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>137</td><td><strong>RAE</strong></td><td>核駁上訴審回局</td><td>核駁號</td><td>來文機關</td></tr>
+          <tr><td>138</td><td><strong>RFS</strong></td><td>新申請案加速審查撤回</td><td>申請號</td><td>申請人</td></tr>
+          <tr><td>139</td><td><strong>RG</strong></td><td>異議回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>140</td><td><strong>RG2</strong></td><td>異議訴願回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>141</td><td><strong>RG5</strong></td><td>異議再審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>142</td><td><strong>RGD</strong></td><td>異議第一審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>143</td><td><strong>RGE</strong></td><td>異議上訴審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>144</td><td><strong>RH</strong></td><td>評定回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>145</td><td><strong>RH2</strong></td><td>評定訴願回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>146</td><td><strong>RH5</strong></td><td>評定再審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>147</td><td><strong>RHD</strong></td><td>評定第一審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>148</td><td><strong>RHE</strong></td><td>評定上訴審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>149</td><td><strong>RK</strong></td><td>舉發回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>150</td><td><strong>RK2</strong></td><td>舉發訴願回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>151</td><td><strong>RK5</strong></td><td>舉發再審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>152</td><td><strong>RKD</strong></td><td>舉發第一審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>153</td><td><strong>RKE</strong></td><td>舉發上訴審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>154</td><td><strong>RL</strong></td><td>撤銷案回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>155</td><td><strong>RL2</strong></td><td>撤銷訴願回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>156</td><td><strong>RL5</strong></td><td>撤銷再審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>157</td><td><strong>RLD</strong></td><td>撤銷第一審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>158</td><td><strong>RLE</strong></td><td>撤銷上訴審回局</td><td>爭議號</td><td>來文機關</td></tr>
+          <tr><td>159</td><td><strong>RR</strong></td><td>退費撤回</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>160</td><td><strong>RW</strong></td><td>其他回局</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>161</td><td><strong>RW2</strong></td><td>其他訴願回局</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>162</td><td><strong>RW5</strong></td><td>其他再審回局</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>163</td><td><strong>RWD</strong></td><td>其他第一審回局</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>164</td><td><strong>RWE</strong></td><td>其他上訴審回局</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>165</td><td><strong>RZ</strong></td><td>其他撤回</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>166</td><td><strong>S</strong></td><td>外銷核備</td><td></td><td>申請人</td></tr>
+          <tr><td>167</td><td><strong>T</strong></td><td>一般行政</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>168</td><td><strong>T1</strong></td><td>程序特行</td><td></td><td>申請人</td></tr>
+          <tr><td>169</td><td><strong>T2</strong></td><td>仿冒查詢</td><td></td><td>申請人</td></tr>
+          <tr><td>170</td><td><strong>T3</strong></td><td>英信特行</td><td></td><td>申請人</td></tr>
+          <tr><td>171</td><td><strong>T4</strong></td><td>法令解釋</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>172</td><td><strong>T5</strong></td><td>陳情</td><td></td><td>申請人</td></tr>
+          <tr><td>173</td><td><strong>T6</strong></td><td>關切</td><td></td><td>申請人</td></tr>
+          <tr><td>174</td><td><strong>T7</strong></td><td>出庭</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>175</td><td><strong>T8</strong></td><td>民刑事判決</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>176</td><td><strong>U</strong></td><td>仿冒鑑定</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>177</td><td><strong>V</strong></td><td>補正</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>178</td><td><strong>V1</strong></td><td>補送文件</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>179</td><td><strong>W</strong></td><td>其他</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>180</td><td><strong>W1</strong></td><td>其他訴願</td><td>多樣</td><td>訴願人</td></tr>
+          <tr><td>181</td><td><strong>W2</strong></td><td>其他訴調</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>182</td><td><strong>W3</strong></td><td>其他再調</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>183</td><td><strong>W4</strong></td><td>其他行訟</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>184</td><td><strong>W5</strong></td><td>其他再審</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>185</td><td><strong>W7</strong></td><td>其他訴補</td><td>多樣</td><td>訴願人</td></tr>
+          <tr><td>186</td><td><strong>W8</strong></td><td>再訴副本</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>187</td><td><strong>WC</strong></td><td>其他補充答辯</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>188</td><td><strong>WD</strong></td><td>其他第一審</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>189</td><td><strong>WE</strong></td><td>其他上訴審</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>190</td><td><strong>WR</strong></td><td>撤銷禁止處分</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>191</td><td><strong>WT</strong></td><td>禁止處分</td><td>多樣</td><td>來文機關</td></tr>
+          <tr><td>192</td><td><strong>X</strong></td><td>更正</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>193</td><td><strong>X1</strong></td><td>勘誤</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>194</td><td><strong>Y</strong></td><td>退文</td><td>多樣</td><td>申請人</td></tr>
+          <tr><td>195</td><td><strong>Z</strong></td><td>公報</td><td></td><td>申請人</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 分頁八：捌、專有名詞列表 -->
+  <div class="tab-panel" id="tab-8">
+    <h2 class="section-title">捌、專有名詞列表</h2>
 
     <div class="rule-card" id="sec-7-1">
       <h3>系統名稱類</h3>
@@ -1913,9 +2156,9 @@ function copySnippet(btn, text) {
     </div>
   </div>
 
-  <!-- 分頁八：捌、文件資訊與編修紀錄 -->
-  <div class="tab-panel" id="tab-8">
-    <h2 class="section-title">捌、文件資訊與編修紀錄</h2>
+  <!-- 分頁九：玖、文件資訊與編修紀錄 -->
+  <div class="tab-panel" id="tab-9">
+    <h2 class="section-title">玖、文件資訊與編修紀錄</h2>
 
     <div class="rule-card" id="sec-8-2">
       <h3>內容編修紀錄 (依原文件最新版本呈現)</h3>
@@ -2056,6 +2299,44 @@ function copySnippet(btn, text) {
         elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 100);
+  }
+
+  // 商標案號對照表即時搜尋篩選腳本 Real-time Table Filter
+  function filterCodeTable() {
+    const input = document.getElementById('code-search-input');
+    const filter = input ? input.value.trim().toLowerCase() : '';
+    const table = document.getElementById('code-mapping-table');
+    if (!table) return;
+    const tbody = table.querySelector('tbody');
+    if (!tbody) return;
+    const rows = tbody.querySelectorAll('tr:not(#no-result-row)');
+    const noResultRow = document.getElementById('no-result-row');
+    const keywordDisplay = document.getElementById('search-keyword-display');
+    
+    let visibleCount = 0;
+
+    rows.forEach(row => {
+      const cells = row.getElementsByTagName('td');
+      if (cells.length >= 3) {
+        const codeText = cells[1].textContent || cells[1].innerText || '';
+        const contentText = cells[2].textContent || cells[2].innerText || '';
+        if (filter === '' || codeText.toLowerCase().includes(filter) || contentText.toLowerCase().includes(filter)) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      }
+    });
+
+    if (noResultRow) {
+      if (visibleCount === 0) {
+        noResultRow.style.display = '';
+        if (keywordDisplay) keywordDisplay.textContent = filter;
+      } else {
+        noResultRow.style.display = 'none';
+      }
+    }
   }
 </script>
 

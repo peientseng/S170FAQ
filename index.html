@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S170商標行政系統常見錯誤修正指引與系統規則 (v3.4)</title>
+  <title>S170商標行政系統常見錯誤修正指引與系統規則 (v3.5)</title>
   <author>21015曾沛恩</author>
   <style>
     :root {
@@ -30,11 +30,11 @@
 
     /* 左側懸浮階層折疊目錄 Floating Accordion Sidebar */
     .sidebar-toc {
-      position: fixed;
-      top: 24px;
-      left: 24px;
-      bottom: 24px;
       width: var(--sidebar-width);
+      flex-shrink: 0;
+      position: sticky;
+      top: 24px;
+      max-height: calc(100vh - 48px);
       background: #ffffff;
       border: 1px solid var(--border-color);
       border-radius: 12px;
@@ -126,11 +126,21 @@
       color: var(--primary);
     }
 
+    /* 置中版面容器 Centered Layout Container */
+    .page-container {
+      display: flex;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px;
+      gap: 32px;
+      align-items: flex-start;
+    }
+
     /* 主內容區域 Main Content */
     .main-wrapper {
-      margin-left: calc(var(--sidebar-width) + 48px);
-      max-width: 960px;
-      padding: 24px 24px 48px 0;
+      flex: 1;
+      min-width: 0;
+      padding: 0 0 48px 0;
     }
 
     header {
@@ -530,14 +540,18 @@
 
     /* 響應式調整 */
     @media (max-width: 900px) {
+      .page-container {
+        flex-direction: column;
+        padding: 16px;
+        gap: 20px;
+      }
       .sidebar-toc {
         position: static;
         width: 100%;
-        margin-bottom: 24px;
+        max-height: none;
       }
       .main-wrapper {
-        margin-left: 0;
-        padding: 16px;
+        width: 100%;
       }
       .fig003-boxes {
         grid-template-columns: 1fr;
@@ -563,6 +577,8 @@ function copySnippet(btn, text) {
     
 </head>
 <body>
+
+<div class="page-container">
 
 <!-- 左側懸浮階層折疊目錄 Floating Accordion Sidebar -->
 <nav class="sidebar-toc">
@@ -683,7 +699,7 @@ function copySnippet(btn, text) {
 <div class="main-wrapper">
   <header>
     <h1>經濟部智慧財產局｜S170商標行政系統</h1>
-    <p>常見錯誤修正指引與問題系統規則說明 (v3.4)</p>
+    <p>常見錯誤修正指引與問題系統規則說明 (v3.5)</p>
   </header>
 
   <!-- 頂部 Tab 頁籤列 Navigation -->
@@ -2260,6 +2276,8 @@ function copySnippet(btn, text) {
     </div>
   </div>
 </div>
+
+</div> <!-- End .page-container -->
 
 <script>
   // 切換分頁控制腳本 Tab Switch Function

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S170商標行政系統常見錯誤修正指引與系統規則 (v3.6)</title>
+  <title>S170商標行政系統常見錯誤修正指引與系統規則 (v3.7)</title>
   <author>21015曾沛恩</author>
   <style>
     :root {
@@ -604,7 +604,7 @@ function copySnippet(btn, text) {
       <a onclick="switchTab('tab-0')" class="toc-single-link" style="color:var(--primary); font-weight:bold; background:var(--primary-light);">🏠 首頁 / 系統簡介與導覽</a>
     </li>
     <li>
-      <details>
+      <details name="toc-accordion">
         <summary onclick="switchTab('tab-1')">壹、繳費與收據相關作業</summary>
         <ul class="toc-sub-list">
           <li><a onclick="switchTabAndScroll('tab-1', 'sec-1-1')">一、收據內容修正</a></li>
@@ -615,7 +615,7 @@ function copySnippet(btn, text) {
       </details>
     </li>
     <li>
-      <details>
+      <details name="toc-accordion">
         <summary onclick="switchTab('tab-2')">貳、文案相關作業</summary>
         <ul class="toc-sub-list">
           <li><a onclick="switchTabAndScroll('tab-2', 'sec-2-1')">一、假收文作業</a></li>
@@ -641,7 +641,7 @@ function copySnippet(btn, text) {
       </details>
     </li>
     <li>
-      <details>
+      <details name="toc-accordion">
         <summary onclick="switchTab('tab-3')">參、人員相關異動</summary>
         <ul class="toc-sub-list">
           <li><a onclick="switchTabAndScroll('tab-3', 'sec-3-1')">一、人員新進、升遷、調科</a></li>
@@ -652,7 +652,7 @@ function copySnippet(btn, text) {
       </details>
     </li>
     <li>
-      <details>
+      <details name="toc-accordion">
         <summary onclick="switchTab('tab-4')">肆、其他系統設定</summary>
         <ul class="toc-sub-list">
           <li><a onclick="switchTabAndScroll('tab-4', 'sec-4-1')">一、地址簿資料維護作業</a></li>
@@ -662,7 +662,7 @@ function copySnippet(btn, text) {
       </details>
     </li>
     <li>
-      <details>
+      <details name="toc-accordion">
         <summary onclick="switchTab('tab-5')">伍、定期辦理業務</summary>
         <ul class="toc-sub-list">
           <li><a onclick="switchTabAndScroll('tab-5', 'sec-5-1')">一、新申請案領案進度表</a></li>
@@ -672,7 +672,7 @@ function copySnippet(btn, text) {
       </details>
     </li>
     <li>
-      <details>
+      <details name="toc-accordion">
         <summary onclick="switchTab('tab-6')">陸、系統相關規則說明</summary>
         <ul class="toc-sub-list">
           <li><a onclick="switchTabAndScroll('tab-6', 'sec-6-1')">一、S170產製之虛擬帳號</a></li>
@@ -709,7 +709,7 @@ function copySnippet(btn, text) {
 <div class="main-wrapper">
   <header>
     <h1>經濟部智慧財產局｜S170商標行政系統</h1>
-    <p>常見錯誤修正指引與問題系統規則說明 (v3.6)</p>
+    <p>常見錯誤修正指引與問題系統規則說明 (v3.7)</p>
   </header>
 
   <!-- 頂部 Tab 頁籤列 Navigation -->
@@ -2263,6 +2263,21 @@ function copySnippet(btn, text) {
 </div> <!-- End .page-container -->
 
 <script>
+  // 手風琴選單：限制側邊欄目錄同時最多只能展開 1 個大項目 Accordion TOC
+  const allTocDetails = document.querySelectorAll('.sidebar-toc details');
+  
+  allTocDetails.forEach(details => {
+    details.addEventListener('toggle', function() {
+      if (this.open) {
+        allTocDetails.forEach(other => {
+          if (other !== this) {
+            other.open = false;
+          }
+        });
+      }
+    });
+  });
+
   // 切換分頁控制腳本 Tab Switch Function
   function switchTab(tabId) {
     const panels = document.querySelectorAll('.tab-panel');
@@ -2288,6 +2303,29 @@ function copySnippet(btn, text) {
       targetBtn.classList.add('active');
     }
 
+    // 連動側邊欄手風琴：若非點擊 summary 觸發，則自動展開該分頁對應之 details 並收合其他
+    const evt = window.event;
+    const isSummaryClick = evt && evt.target && evt.target.tagName === 'SUMMARY';
+    
+    if (!isSummaryClick) {
+      const summaryList = document.querySelectorAll('.sidebar-toc summary');
+      let foundTarget = false;
+      summaryList.forEach(s => {
+        const onclickAttr = s.getAttribute('onclick') || '';
+        if (onclickAttr.includes("'" + tabId + "'")) {
+          const parentDetails = s.closest('details');
+          if (parentDetails) {
+            parentDetails.open = true;
+            foundTarget = true;
+          }
+        }
+      });
+      // 若切換至無子選單之頁面 (如首頁、柒、捌、玖)，則收合所有 details
+      if (!foundTarget) {
+        allTocDetails.forEach(d => d.open = false);
+      }
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -2302,7 +2340,7 @@ function copySnippet(btn, text) {
     }, 100);
   }
 
-  // 商標案號對照表即時搜尋篩選腳本 Real-time Table Filter
+  // 商標案號對照表即時搜尋篩選腳本 Real-time Table Filter (代碼與代碼中文內容雙欄位)
   function filterCodeTable() {
     const input = document.getElementById('code-search-input');
     const filter = input ? input.value.trim().toLowerCase() : '';

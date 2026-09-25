@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S170商標行政系統常見錯誤修正指引與系統規則 (v3.5)</title>
+  <title>S170商標行政系統常見錯誤修正指引與系統規則 (v3.6)</title>
   <author>21015曾沛恩</author>
   <style>
     :root {
@@ -538,6 +538,16 @@
       color: var(--secondary);
     }
 
+    
+    .nav-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+    .nav-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      background-color: #f8fafc;
+    }
+
     /* 響應式調整 */
     @media (max-width: 900px) {
       .page-container {
@@ -699,7 +709,7 @@ function copySnippet(btn, text) {
 <div class="main-wrapper">
   <header>
     <h1>經濟部智慧財產局｜S170商標行政系統</h1>
-    <p>常見錯誤修正指引與問題系統規則說明 (v3.5)</p>
+    <p>常見錯誤修正指引與問題系統規則說明 (v3.6)</p>
   </header>
 
   <!-- 頂部 Tab 頁籤列 Navigation -->
@@ -728,102 +738,75 @@ function copySnippet(btn, text) {
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; margin-bottom: 24px;">
       <!-- Card 1 -->
-      <div class="rule-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#2563eb;">
-        <div>
-          <h4 style="margin:4px 0 8px 0; color:#1e40af; font-size:1.1rem;">壹、繳費與收據相關作業</h4>
-          <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin-bottom:12px;">
-            包含收據內容修正、案件金額移轉、規費退還、收據登錄錯誤更正及重新產製繳費單等操作。
-          </p>
-        </div>
-        <button onclick="switchTab('tab-1')" class="ui-btn" style="background:#2563eb; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
+      <div onclick="switchTab('tab-1')" class="rule-card nav-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#2563eb; cursor:pointer;">
+        <h4 style="margin:4px 0 8px 0; color:#1e40af; font-size:1.1rem;">壹、繳費與收據相關作業</h4>
+        <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin:0;">
+          包含收據內容修正、案件金額移轉、規費退還、收據登錄錯誤更正及重新產製繳費單等操作。
+        </p>
       </div>
 
       <!-- Card 2 -->
-      <div class="rule-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#0284c7;">
-        <div>
-          <h4 style="margin:4px 0 8px 0; color:#0369a1; font-size:1.1rem;">貳、文案相關作業 (19項)</h4>
-          <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin-bottom:12px;">
-            包含假收文作業、多圖樣處理、銷號、案號修正、發文通知重審函及解開重審等 19 項重要流程。
-          </p>
-        </div>
-        <button onclick="switchTab('tab-2')" class="ui-btn" style="background:#0284c7; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
+      <div onclick="switchTab('tab-2')" class="rule-card nav-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#0284c7; cursor:pointer;">
+        <h4 style="margin:4px 0 8px 0; color:#0369a1; font-size:1.1rem;">貳、文案相關作業 (19項)</h4>
+        <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin:0;">
+          包含假收文作業、多圖樣處理、銷號、案號修正、發文通知重審函及解開重審等 19 項重要流程。
+        </p>
       </div>
 
       <!-- Card 3 -->
-      <div class="rule-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#059669;">
-        <div>
-          <h4 style="margin:4px 0 8px 0; color:#047857; font-size:1.1rem;">參、人員相關異動</h4>
-          <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin-bottom:12px;">
-            包含新進升遷調科權限維護、退休離職、評定委員指派及四層/三層代決行權限設定。
-          </p>
-        </div>
-        <button onclick="switchTab('tab-3')" class="ui-btn" style="background:#059669; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
+      <div onclick="switchTab('tab-3')" class="rule-card nav-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#059669; cursor:pointer;">
+        <h4 style="margin:4px 0 8px 0; color:#047857; font-size:1.1rem;">參、人員相關異動</h4>
+        <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin:0;">
+          包含新進升遷調科權限維護、退休離職、評定委員指派及四層/三層代決行權限設定。
+        </p>
       </div>
 
       <!-- Card 4 -->
-      <div class="rule-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#d97706;">
-        <div>
-          <h4 style="margin:4px 0 8px 0; color:#b45309; font-size:1.1rem;">肆、其他系統設定</h4>
-          <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin-bottom:12px;">
-            包含地址簿資料維護、共有商標代理人單獨委任註記及文稿樣式設定等系統功能。
-          </p>
-        </div>
-        <button onclick="switchTab('tab-4')" class="ui-btn" style="background:#d97706; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
+      <div onclick="switchTab('tab-4')" class="rule-card nav-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#d97706; cursor:pointer;">
+        <h4 style="margin:4px 0 8px 0; color:#b45309; font-size:1.1rem;">肆、其他系統設定</h4>
+        <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin:0;">
+          包含地址簿資料維護、共有商標代理人單獨委任註記及文稿樣式設定等系統功能。
+        </p>
       </div>
 
       <!-- Card 5 -->
-      <div class="rule-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#7c3aed;">
-        <div>
-          <h4 style="margin:4px 0 8px 0; color:#6d28d9; font-size:1.1rem;">伍、定期辦理業務</h4>
-          <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin-bottom:12px;">
-            包含每月線上審查領案進度統計、辦結類別件數月報及每月收文調卷歸檔備份作業。
-          </p>
-        </div>
-        <button onclick="switchTab('tab-5')" class="ui-btn" style="background:#7c3aed; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
+      <div onclick="switchTab('tab-5')" class="rule-card nav-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#7c3aed; cursor:pointer;">
+        <h4 style="margin:4px 0 8px 0; color:#6d28d9; font-size:1.1rem;">伍、定期辦理業務</h4>
+        <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin:0;">
+          包含每月線上審查領案進度統計、辦結類別件數月報及每月收文調卷歸檔備份作業。
+        </p>
       </div>
 
       <!-- Card 6 -->
-      <div class="rule-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#dc2626;">
-        <div>
-          <h4 style="margin:4px 0 8px 0; color:#b91c1c; font-size:1.1rem;">陸、系統相關規則說明 (15項)</h4>
-          <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin-bottom:12px;">
-            包含虛擬帳號扣款、快軌案判定、分割規則、到期消滅/放棄延展差異等 15 項核心系統機制。
-          </p>
-        </div>
-        <button onclick="switchTab('tab-6')" class="ui-btn" style="background:#dc2626; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
+      <div onclick="switchTab('tab-6')" class="rule-card nav-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#dc2626; cursor:pointer;">
+        <h4 style="margin:4px 0 8px 0; color:#b91c1c; font-size:1.1rem;">陸、系統相關規則說明 (15項)</h4>
+        <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin:0;">
+          包含虛擬帳號扣款、快軌案判定、分割規則、到期消滅/放棄延展差異等 15 項核心系統機制。
+        </p>
       </div>
 
       <!-- Card 7 -->
-      <div class="rule-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#0891b2;">
-        <div>
-          <h4 style="margin:4px 0 8px 0; color:#0e7490; font-size:1.1rem;">柒、商標案號與其規則對照表</h4>
-          <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin-bottom:12px;">
-            收錄自項次 1 至項次 195 之完整案號代碼、代碼中文內容、對應收文案號種類及來文身分對照表。
-          </p>
-        </div>
-        <button onclick="switchTab('tab-7')" class="ui-btn" style="background:#0891b2; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
+      <div onclick="switchTab('tab-7')" class="rule-card nav-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#0891b2; cursor:pointer;">
+        <h4 style="margin:4px 0 8px 0; color:#0e7490; font-size:1.1rem;">柒、商標案號與其規則對照表</h4>
+        <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin:0;">
+          收錄自項次 1 至項次 195 之完整案號代碼、代碼中文內容、對應收文案號種類及來文身分對照表。
+        </p>
       </div>
 
       <!-- Card 8 -->
-      <div class="rule-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#475569;">
-        <div>
-          <h4 style="margin:4px 0 8px 0; color:#334155; font-size:1.1rem;">捌、專有名詞列表</h4>
-          <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin-bottom:12px;">
-            跨系統名稱（S170/S091/EDOC）代號對照表及處分結案狀態碼意義對照。
-          </p>
-        </div>
-        <button onclick="switchTab('tab-8')" class="ui-btn" style="background:#475569; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
+      <div onclick="switchTab('tab-8')" class="rule-card nav-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#475569; cursor:pointer;">
+        <h4 style="margin:4px 0 8px 0; color:#334155; font-size:1.1rem;">捌、專有名詞列表</h4>
+        <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin:0;">
+          跨系統名稱（S170/S091/EDOC）代號對照表及處分結案狀態碼意義對照。
+        </p>
       </div>
 
       <!-- Card 9 -->
-      <div class="rule-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#64748b;">
-        <div>
-          <h4 style="margin:4px 0 8px 0; color:#475569; font-size:1.1rem;">玖、文件編修紀錄</h4>
-          <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin-bottom:12px;">
-            記錄本手冊文件之歷史編修歷程與版本發布紀錄。
-          </p>
-        </div>
-        <button onclick="switchTab('tab-9')" class="ui-btn" style="background:#64748b; color:white; font-weight:bold; width:100%; padding:8px 0; border:none; margin-top:auto;">前往分頁 ➔</button>
+      <div onclick="switchTab('tab-9')" class="rule-card nav-card" style="margin-bottom:0; display:flex; flex-direction:column; border-left-color:#64748b; cursor:pointer;">
+        <h4 style="margin:4px 0 8px 0; color:#475569; font-size:1.1rem;">玖、文件編修紀錄</h4>
+        <p style="font-size:0.88rem; color:#64748b; line-height:1.5; margin:0;">
+          記錄本手冊文件之歷史編修歷程與版本發布紀錄。
+        </p>
       </div>
     </div>
   </div>
